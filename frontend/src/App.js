@@ -12,14 +12,16 @@ import { Component } from "react";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar/>
-      <Home/>
-      <Audit/>
-      <Referral/>
-      <Section/>
-      <Footer/>
-    </div>
+    <body class="body">
+      <div className="App">
+        <NavBar/>
+        <Home/>
+        <Audit/>
+        <Referral/>
+        <Section/>
+        <Footer/>
+      </div>
+    </body>
   );
 }
 

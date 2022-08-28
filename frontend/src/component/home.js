@@ -9,7 +9,8 @@ const Home = () => {
 				<div class="text-block"></div>
 				<div class="embed">
 					<div class="text-block-2" id="timerstart" >00 : 00 : 00</div>
-				</div><a class="button-start w-button" onClick="GetFreeMin()">  Get Free Miners 10 BUSD</a>
+				</div>
+                <a class="button-start w-button" onClick="GetFreeMin()">  Get Free Miners 10 BUSD</a>
 				<div class="error-egs">
 					<div>The bonus can only be received once</div>
 				</div>
@@ -24,9 +25,9 @@ const Home = () => {
 								<h2 class="h2">What is ToTheSmart</h2>
 								<div class="text-block-3">
                                     Play To Earn a mining farm built on the Binance Smart Chain blockchain. Buy miners, mine MineToken, and exchange it for BUSD or reinvest in your farm and increase your daily income.                                                                                          Participate in the ToTheSmart Ambassador program and earn income from every purchase of miners as well as from the income of your followers 7 generations deep. Your income is unlimited.</div>
-								{/* <div style="" class="video w-video w-embed">
-									<video src="../www.youtube.com/watch@v=V548n_bXRQs" controls="controls" width="560" height="315"  />                                                                                                                                                
-								</div> */}
+								<div class="video w-video w-embed">
+									<video src="www.youtube.com/watch@v=V548n_bXRQs" controls="controls" width="560" height="315"  />                                                                                                                                                
+								</div>
 							</div>
 						</div>
 						<div class="columwhat2">
