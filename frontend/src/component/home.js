@@ -35,7 +35,10 @@ const Home = () => {
 								<div class="link">
 									<div class="text-block-9">Tothesmart Whitepaper</div>
 								</div>
-								<div class="div-block-7"><a href="PDF/TOTheSmart(EN).pdf" target="_blank" class="link-pdf w-inline-block"><div class="text-block-10">English</div><div class="downl"></div></a><a href="PDF/TOTheSmart(CHINA).pdf" target="_blank" class="link-pdf _2 w-inline-block"><div class="text-block-10">Chinese</div><div class="downl"></div></a><a href="PDF/TOTheSmart(Hindi).pdf" target="_blank" class="link-pdf _3 w-inline-block"><div class="text-block-10">Hindi</div><div class="downl"></div></a><a href="PDF/TOTheSmart(ES).pdf" target="_blank" class="link-pdf _4 w-inline-block"><div class="text-block-10">Spanish</div><div class="downl"></div></a></div>
+								<div class="div-block-7"><a href="/PDF/TOTheSmart(EN).pdf" target="_blank" class="link-pdf w-inline-block">
+                                <div class="text-block-10">English</div><div class="downl"></div></a><a href="/PDF/TOTheSmart(CHINA).pdf" target="_blank" class="link-pdf _2 w-inline-block">
+                                <div class="text-block-10">Chinese</div><div class="downl"></div></a><a href="/PDF/TOTheSmart(Hindi).pdf" target="_blank" class="link-pdf _3 w-inline-block">
+                                <div class="text-block-10">Hindi</div><div class="downl"></div></a><a href="/PDF/TOTheSmart(ES).pdf" target="_blank" class="link-pdf _4 w-inline-block"><div class="text-block-10">Spanish</div><div class="downl"></div></a></div>
 							</div>
 						</div>
 					</div>
