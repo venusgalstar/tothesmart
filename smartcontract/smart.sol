@@ -78,17 +78,17 @@ contract ToTheSmart {
     
     ITimerPool timer;
 
-struct User {
-            address referrer;
-            uint256 referrals;
-            uint256 invest;
-            bool l2;
-            bool l3;
-            bool l4;
-            bool l5;
-            bool l6;
-            bool l7;
-        }
+    struct User {
+        address referrer;
+        uint256 referrals;
+        uint256 invest;
+        bool l2;
+        bool l3;
+        bool l4;
+        bool l5;
+        bool l6;
+        bool l7;
+    }
 
     mapping(address => User) internal users;
     mapping(address => uint256) public usersMiner;
