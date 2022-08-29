@@ -6,7 +6,7 @@ var walletConnected = false;
 var currentAddr;
 
 const _initialState = {
-    account: "",
+    account: "Connect Wallet",
 }
 
 const init = (init) => {
@@ -16,17 +16,14 @@ const init = (init) => {
 const reducer = (state = init(_initialState), action) => {
 
     if (action.type === 'GET_USER_INFO') {
-
+        console.log("account", action.payload.account);
         return Object.assign({}, state, {
             account: action.payload.account,
         })
+    } else if( action.type === 'CONNECT_WALLET'){
+        Wallet();
     }
     return state;
-}
-
-// Helper for minimize address to => '0x000...00001'
-const minimizeStr = (str, start = 5, end = 5) => {
-    return str.slice(0, start) + "..." + str.slice(-end)
 }
 
 const swichNetwork = async (chainId) => {
@@ -51,18 +48,17 @@ const swichNetwork = async (chainId) => {
 
 const Wallet = async () => {
 
+    console.log("walletConnected", walletConnected);
+
     if (!walletConnected) {
 
         if (window.ethereum) {
-            window.web3 = new web3(window.ethereum)
             try {
                 await window.ethereum.enable();
             } catch (error) {
                 console.error(error);
             }
-        } else if (window.web3) {
-            window.web3 = new web3(web3.currentProvider);
-        }
+        } 
 
         // Check chain ID and swich if possible
         let networkEnabled = swichNetwork(config.NETWORK_ID);

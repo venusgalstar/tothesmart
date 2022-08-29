@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import store from "../store";
+import { connect } from 'react-redux';
 
 class NavBar extends React.Component {
     constructor(props){
@@ -10,11 +11,20 @@ class NavBar extends React.Component {
 
         this.Wallet = this.Wallet.bind(this);
     }
-    Wallet = () =>{
+
+    // Helper for minimize address to => '0x000...00001'
+    minimizeStr = (str, start = 5, end = 5) => {
+        if( str[0] !== '0')
+            return str;
+        return str.slice(0, start) + "..." + str.slice(-end)
+    }
+
+    Wallet(){
         store.dispatch({
             type: "CONNECT_WALLET"
         }); 
     }
+
     render() {
         return (
             <>
@@ -41,9 +51,9 @@ class NavBar extends React.Component {
                                 <a href="hindy.html" className="flag _4 w-inline-block"></a>
                             </div>
                             <div>
-                                <a id="connect-btn" target="_blank" className="button w-button" onClick={this.Wallet.bind(this)}>
-                                    { this.props.account }
-                                </a>
+                                <button id="connect-btn" className="button w-button" onClick={this.Wallet}>
+                                    {this.minimizeStr(this.props.account)}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -52,4 +62,15 @@ class NavBar extends React.Component {
         );
     }
 }
-export default NavBar;
+const mapStateToProps = state => {
+    return {
+        account: state.account,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return { dispatch }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
