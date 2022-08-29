@@ -2736,10 +2736,10 @@ textarea.w-select {
      -webkit-align-items: center;
      -ms-flex-align: center;
      align-items: center;
-     opacity: 0.1;
-     -webkit-transform: scale(0.5);
-     -ms-transform: scale(0.5);
-     transform: scale(0.5);
+     opacity: 1;
+     -webkit-transform: scale(1);
+     -ms-transform: scale(1);
+     transform: scale(1);
      -webkit-transition: all 325ms ease;
      transition: all 325ms ease;
      color: #00df89;
