@@ -25,15 +25,13 @@ class Main extends Component {
     render() {
         return (
             <>
-                <body class="body">
-                    <NavBar/>
-                    <Home/>
-                    <Contract/>
-                    <Audit/>
-                    <Referral/>
-                    <Section/>
-                    <Footer/>
-                </body>
+                <NavBar/>
+                <Home/>
+                <Contract/>
+                <Audit/>
+                <Referral/>
+                <Section/>
+                <Footer/>
             </>
         );
     }
