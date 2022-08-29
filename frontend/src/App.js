@@ -1,27 +1,18 @@
-import NavBar from "./component/nav_bar";
-import Home from "./component/home";
-import Contract from "./component/contract";
-import Audit from "./component/audit";
-import Referral from "./component/referral";
-import Section from "./component/section";
-import Footer from "./component/footer";
-
-import './App.css';
+import Main from "./pages/Main";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './asset/style.css';
-
 
 function App() {
   return (
-    <body class="body">
-      <NavBar/>
-      <Home/>
-      <Contract/>
-      <Audit/>
-      <Referral/>
-      <Section/>
-      <Footer/>
-    </body>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main />}>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
+
+
 
 export default App;

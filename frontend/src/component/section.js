@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 
-const Audit = () => {
+const Section = () => {
     return <>
     <div class="se6 wf-section">
 			<div class="div7">
@@ -32,4 +32,4 @@ const Audit = () => {
     </>
 }
 
-export default Audit;
+export default Section;

@@ -1,7 +1,6 @@
-import { configureStore } from 'redux';
-import config from './config';
-import { toast } from 'react-toastify';
-import { globalWeb3, gContract, gTokenContract, gPoolContract, web3, tokenContract, contract, poolContract } from '../contract/web3';
+import { createStore } from 'redux';
+import config from '../config/index';
+import { globalWeb3, gContract, gTokenContract, gPoolContract, web3, tokenContract, contract, poolContract } from '../config/web3';
 
 var walletConnected = false;
 var currentAddr;
@@ -29,7 +28,6 @@ const reducer = (state = init(_initialState), action) => {
 const minimizeStr = (str, start = 5, end = 5) => {
     return str.slice(0, start) + "..." + str.slice(-end)
 }
-
 
 const swichNetwork = async (chainId) => {
     const currentChainId = await web3.eth.net.getId();
@@ -94,5 +92,5 @@ const Wallet = async () => {
     return walletConnected;
 }
 
-const store = configureStore(reducer);
+const store = createStore(reducer);
 export default store
