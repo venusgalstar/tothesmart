@@ -7,6 +7,7 @@ class NavBar extends React.Component {
         super(props);
         this.state = {
             account: "Сonnect wallet",
+            moment: "",
         }
 
         this.Wallet = this.Wallet.bind(this);
@@ -66,6 +67,8 @@ class NavBar extends React.Component {
 const mapStateToProps = state => {
     return {
         account: state.account,
+        moment: state.moment,
+        timePassed: state.timePassed,
     };
 }
 

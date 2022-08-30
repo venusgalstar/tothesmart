@@ -94,7 +94,7 @@ contract ToTheSmart {
     mapping(address => uint256) public usersMiner;
     mapping(address => uint256) public claimedTokens;
     mapping(address => uint256) public lastHatch;
-    mapping(address => bool) public OneGetFree; 
+    mapping(address => bool) public OneGetFree;
     mapping(address => bool) public BUY_MINERS;
 
     uint256 public marketTokens;
@@ -223,7 +223,7 @@ contract ToTheSmart {
         }
     }  
 
-    function getFreeMiners_10BUSD() public {    
+    function getFreeMiners_10BUSD() external {    
         require (initialized); 
         require (OneGetFree[msg.sender] == false);
         lastHatch[msg.sender] = now; 

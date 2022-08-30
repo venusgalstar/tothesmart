@@ -19,16 +19,8 @@ class Main extends Component {
             type: "CONTRACT_INFO"
         });
 
-        this.timer = setInterval(() => {
-            this.updateTimer();
-        }, 1000);
     }
 
-    updateTimer() {
-        this.props.dispatch({
-            type: "UPDATE_TIMER"
-        });
-    }
 
     async loadRateUsdt() {
     }

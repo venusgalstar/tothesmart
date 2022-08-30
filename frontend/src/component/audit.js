@@ -11,7 +11,36 @@ class Audit extends React.Component {
 			reward: "00.0000 BUSD",
 			balance: "000.0000 BUSD",
 			lastUser: "",
+            timePassed: "00:00",
         }
+		
+        this.timer = setInterval(() => {
+            this.updateTime();
+        }, 1000);
+    }
+
+	
+    updateTime() {
+        // Get current timestamp
+        let currentTime = new Date().getTime();
+        // Calculate distance
+        let distance = (this.state.moment * 1000 + 3600000) - currentTime;
+
+        let timePassed;
+
+        if (distance > 0) {
+
+            let minutes = Math.floor((distance / 1000 / 60) % 60);
+            let seconds = Math.floor((distance / 1000) % 60);
+
+            if (seconds < 10) seconds = '0' + seconds;
+            if (minutes < 10) minutes = '0' + minutes;
+
+            timePassed = minutes + ':' + seconds;
+        } else {
+            timePassed = "00:00";
+        }
+        this.setState({timePassed:timePassed});
     }
 
 	render (){
@@ -21,7 +50,7 @@ class Audit extends React.Component {
 						<div className="timer">
 							<div className="timer-blockchain">
 								<div className="text-block-18">TIME POOL</div>
-								<div className="text-block-19" id="timer3">00:00</div>
+								<div className="text-block-19" id="timer3">{this.props.timePassed}</div>
 								<div className="div-block-16">
 									<div className="text-block-20" id="contractbalancePOOL">{this.props.balance}</div>
 								</div>
@@ -117,6 +146,7 @@ const mapStateToProps = state => {
 		reward: state.reward,
 		balance: state.balance, 
 		lastUser: state.lastUser,
+		timePassed: state.timePassed
     };
 }
 

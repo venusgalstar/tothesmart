@@ -13,6 +13,7 @@ const _initialState = {
     reward: "00.0000 BUSD",
     balance: "000.0000 BUSD",
     lastUser: "",
+    moment: "",
 }
 
 const init = (init) => {
@@ -50,6 +51,10 @@ const reducer = (state = init(_initialState), action) => {
         return Object.assign({}, state, {
             lastUser: action.payload.lastUser,
         });        
+    } else if( action.type === 'UPDATE_TIME'){
+        return Object.assign({}, state, {
+            moment: action.payload.moment,
+        });    
     }
     return state;
 }
@@ -162,12 +167,12 @@ const Connect = () => {
             type: 'GET'
         }
 
-        fetch('https://tothesmart.com/js/out.json', requestOption).then((res) => res.json()).then((json)=>{
-            console.log(json);
+        // fetch('https://tothesmart.com/js/out.json', requestOption).then((res) => res.json()).then((json)=>{
+        //     console.log(json);
 
-        }).catch({
+        // }).catch({
 
-        });
+        // });
 
         if (contract) {
 
@@ -198,9 +203,13 @@ const Connect = () => {
                 })
             }
 
-            // poolContract.methods.moment().call().then(res => {
-            //     moment = res;
-            // })
+            poolContract.methods.moment().call().then(res => {
+                console.log("moment", res);
+                store.dispatch({
+                    type: "UPDATE_TIME",
+                    payload: { moment: res}
+                });
+            })
 
             tokenContract.methods.balanceOf(config.POOL).call().then(res => {
                 store.dispatch({
