@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import store from "../store";
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
@@ -6,8 +7,41 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timeStarted: "00 : 00 : 00",
+			timeContractPassed: "00 : 00 : 00 : 00",
 		}
+
+		this.GetFreeMin = this.GetFreeMin.bind(this);
+
+		this.timer = setInterval(() => {
+            this.updateTime();
+        }, 1000);
+	}
+
+	updateTime() {
+		const deadline = new Date(1658145600 * 1000);
+        const diff = new Date() - deadline;
+
+        const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+        const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+        const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+        const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+        const days2 = days < 10 ? '0' + days : days;
+        const hours2 = hours < 10 ? '0' + hours : hours;
+        const minutes2 = minutes < 10 ? '0' + minutes : minutes;
+        const seconds2 = seconds < 10 ? '0' + seconds : seconds;
+
+		const timeStarted = days2 + ' : ' + hours2 + ' : ' + minutes2 + ' : ' + seconds2;
+
+		store.dispatch({
+            type: "UPDATE_CONTRACT_TIME",
+            payload: { timeContractPassed: timeStarted }
+        }); 
+
+		console.log(this.props.timeContractPassed);
+    }
+
+	GetFreeMin(){
+
 	}
 
 	render(){
@@ -17,9 +51,11 @@ class Home extends React.Component {
 					<h1 className="h1">To The Smart</h1>
 					<div className="text-block"></div>
 					<div className="embed">
-						<div className="text-block-2" id="timerstart" >{this.props.timeStarted}</div>
+						<div className="text-block-2" id="timerstart" >{this.props.timeContractPassed}</div>
 					</div>
-					{/* <a className="button-start w-button" onClick={this.GetFreeMin.bind(this)}>  Get Free Miners 10 BUSD</a> */}
+					<button className="button-start w-button" onClick={this.GetFreeMin.bind(this)}>  
+						Get Free Miners 10 BUSD
+					</button>
 					<div className="error-egs">
 						<div>The bonus can only be received once</div>
 					</div>
@@ -60,7 +96,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-		timeStarted: state.timeStarted,
+		timeContractPassed: state.timeContractPassed,
     };
 }
 

@@ -11,9 +11,12 @@ const _initialState = {
     miner: "000",
     tokens: "00.000",
     reward: "00.0000 BUSD",
-    balance: "000.0000 BUSD",
+    poolBalance: "000.0000 BUSD",
+    contractBalance: "000.0000 BUSD",
     lastUser: "",
     moment: "",
+    timePoolPassed: "00:00",
+    timeContractPassed: "00 : 00 : 00 : 00"
 }
 
 const init = (init) => {
@@ -43,9 +46,13 @@ const reducer = (state = init(_initialState), action) => {
         return Object.assign({}, state, {
             reward: action.payload.reward,
         });
+    } else if( action.type === 'POOL_BALANCE'){
+        return Object.assign({}, state, {
+            poolBalance: action.payload.poolBalance,
+        });
     } else if( action.type === 'CONTRACT_BALANCE'){
         return Object.assign({}, state, {
-            balance: action.payload.balance,
+            contractBalance: action.payload.contractBalance,
         });
     } else if( action.type === 'LAST_USER'){
         return Object.assign({}, state, {
@@ -55,6 +62,14 @@ const reducer = (state = init(_initialState), action) => {
         return Object.assign({}, state, {
             moment: action.payload.moment,
         });    
+    } else if( action.type === 'UPDATE_TIMEPOOL_TIME'){
+        return Object.assign({}, state, {
+            timePoolPassed: action.payload.timePoolPassed,
+        });
+    } else if( action.type === 'UPDATE_CONTRACT_TIME'){
+        return Object.assign({}, state, {
+            timeContractPassed: action.payload.timeContractPassed,
+        });
     }
     return state;
 }
@@ -213,8 +228,15 @@ const Connect = () => {
 
             tokenContract.methods.balanceOf(config.POOL).call().then(res => {
                 store.dispatch({
+                    type: "POOL_BALANCE",
+                    payload: { poolBalance: ` ${(res / 1e18).toFixed(6)} BUSD` }
+                });
+            })
+
+            tokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
+                store.dispatch({
                     type: "CONTRACT_BALANCE",
-                    payload: { balance: ` ${(res / 1e18).toFixed(6)} BUSD` }
+                    payload: { contractBalance: ` ${(res / 1e18).toFixed(0)} BUSD` }
                 });
             })
 

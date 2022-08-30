@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import store from "../store";
 import { connect } from 'react-redux';
 
 class Audit extends React.Component {
@@ -9,9 +10,11 @@ class Audit extends React.Component {
 			miner: "000",
 			tokens: "00.000",
 			reward: "00.0000 BUSD",
-			balance: "000.0000 BUSD",
+			poolBalance: "000.0000 BUSD",
+			contractBalance: "000.0000 BUSD",
 			lastUser: "",
-            timePassed: "00:00",
+			moment: "",
+            timePoolPassed: "00:00"
         }
 		
         this.timer = setInterval(() => {
@@ -26,7 +29,7 @@ class Audit extends React.Component {
         // Calculate distance
         let distance = (this.state.moment * 1000 + 3600000) - currentTime;
 
-        let timePassed;
+        let timePassedCal;
 
         if (distance > 0) {
 
@@ -36,11 +39,15 @@ class Audit extends React.Component {
             if (seconds < 10) seconds = '0' + seconds;
             if (minutes < 10) minutes = '0' + minutes;
 
-            timePassed = minutes + ':' + seconds;
+            timePassedCal = minutes + ':' + seconds;
         } else {
-            timePassed = "00:00";
+            timePassedCal = "00:00";
         }
-        this.setState({timePassed:timePassed});
+
+		store.dispatch({
+            type: "UPDATE_TIMEPOOL_TIME",
+            payload: { timePoolPassed: timePassedCal }
+        }); 
     }
 
 	render (){
@@ -50,15 +57,19 @@ class Audit extends React.Component {
 						<div className="timer">
 							<div className="timer-blockchain">
 								<div className="text-block-18">TIME POOL</div>
-								<div className="text-block-19" id="timer3">{this.props.timePassed}</div>
+								<div className="text-block-19" id="timer3">{this.props.timePoolPassed}</div>
 								<div className="div-block-16">
-									<div className="text-block-20" id="contractbalancePOOL">{this.props.balance}</div>
+									<div className="text-block-20" id="contractbalancePOOL">{this.props.poolBalance}</div>
 								</div>
 								<div className="div-block-20">
 									<div className="text-block-25">Last Wallet Address :</div>
 									<div className="example" id="lastuserpool">{this.props.lastUser}</div>
 								</div>
-								<div className="wallet-text">If there are no purchases of miners in the amount of $50 or more within an hour after you, then the entire amount of Time Pool will automatically be credited to your wallet. This is guaranteed by a<a href="../https@bscscan.com/address/0x0cff03d61af4ef29a374b8aeef8bbedd6abc63b5" target="_blank" className="link-text"> smart contract</a></div>
+								<div className="wallet-text">
+									If there are no purchases of miners in the amount of $50 or more within an hour after you, 
+									then the entire amount of Time Pool will automatically be credited to your wallet. 
+									This is guaranteed by a<a href="https://bscscan.com/address/0x0cff03d61af4ef29a374b8aeef8bbedd6abc63b5" target="_blank" className="link-text"> 
+									smart contract</a></div>
 							</div>
 						</div>
 						<div className="div4">
@@ -68,7 +79,7 @@ class Audit extends React.Component {
 									<div className="div-block-12">
 										<div className="itemscore-sale">
 											<div className="text-score">Contract</div>
-											<div className="text-meaning" id="ba2"></div>
+											<div className="text-meaning" id="ba2">{this.props.contractBalance}</div>
 										</div>
 									</div>
 									<div className="div-block-12">
@@ -144,9 +155,11 @@ const mapStateToProps = state => {
         miner: state.miner,
 		tokens: state.tokens,
 		reward: state.reward,
-		balance: state.balance, 
+		poolBalance: state.poolBalance, 
+		contractBalance: state.contractBalance,
 		lastUser: state.lastUser,
-		timePassed: state.timePassed
+		timePoolPassed: state.timePoolPassed,
+		moment: state.moment
     };
 }
 
