@@ -7,16 +7,27 @@ import Section from "../component/section";
 import Footer from "../component/footer";
 import { Component } from "react";
 import { connect } from 'react-redux';
+import store from "../store";
 
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
+
+        this.props.dispatch({
+            type: "CONTRACT_INFO"
+        });
+
+        this.timer = setInterval(() => {
+            this.updateTimer();
+        }, 1000);
     }
 
-    componentDidMount() {
-        this.loadRateUsdt();
+    updateTimer() {
+        this.props.dispatch({
+            type: "UPDATE_TIMER"
+        });
     }
 
     async loadRateUsdt() {
