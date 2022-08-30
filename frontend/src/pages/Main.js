@@ -7,7 +7,7 @@ import Section from "../component/section";
 import Footer from "../component/footer";
 import { Component } from "react";
 import { connect } from 'react-redux';
-import store from "../store";
+
 
 
 class Main extends Component {

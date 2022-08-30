@@ -41,7 +41,9 @@ class Home extends React.Component {
     }
 
 	GetFreeMin(){
-
+		store.dispatch({
+            type: "GET_FREE_MINER"
+        }); 
 	}
 
 	render(){
