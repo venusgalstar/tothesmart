@@ -19,7 +19,7 @@ const _initialState = {
     timePoolPassed: "00:00",
     timeContractPassed: "00 : 00 : 00 : 00",
     stakeAmount: 50,
-    referLink: "0x40273c538768c68F1674505E6E9a0Cb036ee2811"
+    referLink: "0x00000000000000000000000000000000000"
 }
 
 const init = (init) => {
@@ -32,6 +32,7 @@ const reducer = (state = init(_initialState), action) => {
         console.log("account", action.payload.account);
         return Object.assign({}, state, {
             account: action.payload.account,
+            referLink: action.payload.account,
         });
     } else if( action.type === 'CONNECT_WALLET'){
         Wallet();
@@ -87,7 +88,7 @@ const reducer = (state = init(_initialState), action) => {
         BuyMin(state.referLink, state.stakeAmount);
     } else if( action.type === 'REINVEST'){
         reinvest();
-    } else if( action.type === 'SellMin'){
+    } else if( action.type === 'SELL_MINER'){
         SellMin();
     }
     return state;
@@ -100,37 +101,23 @@ const SellMin = async () => {
         const Miners = await contract.methods.usersMiner(currentAddr.toLowerCase()).call();
                 
         let a = false;
+        var idx = 1, level;
 
-        if (Miners > 99 && Miners < 106) {
-            a = true;
+        for( idx = 1; idx < 10; idx++ )
+        {
+            if( Miners < 100 * idx ){
+                level = idx;
+                break;
+            }
+
+            if( Miners <= idx * 100 + idx * 5  ){
+                a = true;
+                break;
+            }   
         }
-        else if (Miners > 199 && Miners < 211) {
+
+        if( idx == 10 )
             a = true;
-        }
-        else if (Miners > 299 && Miners < 316) {
-            a = true;
-        }
-        else if (Miners > 399 && Miners < 421) {
-            a = true;
-        }
-        else if (Miners > 499 && Miners < 526) {
-            a = true;
-        }
-        else if (Miners > 599 && Miners < 631) {
-            a = true;
-        }
-        else if (Miners > 699 && Miners < 736) {
-            a = true;
-        }
-        else if (Miners > 799 && Miners < 841) {
-            a = true;
-        }
-        else if (Miners > 899 && Miners < 946) {
-            a = true;
-        }
-        else if (Miners >= 1000) {
-            a = true;
-        }
 
         if (isMiners == false) {
             document.querySelector('.error-info').style.display = 'block'
@@ -151,227 +138,17 @@ const SellMin = async () => {
                     })
                 }
             });
-        } else if (Miners < 100 && isMiners ) {
+        } else if ( isMiners ) {
             const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
+                english : 'You can sell MineToken when your farm capacity is in the range of ${100*level - 101 * level} Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
+                espanyol: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
+                chinese: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
+                hindy: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
             }
-            const pathname = document.location.pathname;
+            
             let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
+            alert(text);
         }
-        else if (Miners > 104 && Miners < 200 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 200 - 210 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 200 - 210 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 200 - 210 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 200 - 210 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 210 && Miners < 300 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 300 - 315 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 300 - 315 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 300 - 315 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 300 - 315 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>'
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 315 && Miners < 400 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 400 - 420 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 400 - 420 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 400 - 420 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 400 - 420 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 420 && Miners < 500 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 500 - 525 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 500 - 525 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 500 - 525 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 500 - 525 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 525 && Miners < 600 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 600 - 630 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 600 - 630 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 600 - 630 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 600 - 630 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 630 && Miners < 700 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 700 - 735 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 700 - 735 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 700 - 735 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 700 - 735 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 735 && Miners < 800 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 800 - 840 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 800 - 840 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 800 - 840 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 800 - 840 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 840 && Miners < 900 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 900 - 945 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 900 - 945 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 900 - 945 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 900 - 945 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-        else if (Miners > 945 && Miners < 1000 && isMiners){
-            const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of 900 - 1000 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 900 - 1000 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 900 - 1000 Miners. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 900 -  1000. Learn more: link to post <a href="../https@t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-            }
-            const pathname = document.location.pathname;
-            let text = languages.english;
-            if(pathname.includes('china.html')){
-                text = languages.chinese;
-            }else if(pathname.includes('esp.html')){
-                text = languages.espanyol;
-            }else if(pathname.includes('hindy.html')){
-                text = languages.hindy;
-            }
-
-            $('body').append(getPopupHtml(text));
-            $('.popup').slideToggle();
-            console.log(document.location.pathname.includes('index.html'));
-        }
-	    else if (Miners >= 1000 && isMiners) {
-            contract.methods.getMyTokens(currentAddr).call().then(res => {
-                if (res > 0) {
-                    contract.methods.calculateTokensSell(res).call().then(res2 => {
-                        contract.methods.sellTokens(res2)
-                            .send({
-                                from: currentAddr,
-                                gasPrice: gasPrice,
-                            })
-                    })
-                }
-            })
-        }
-
     }
 }
 const reinvest = async () => {
@@ -500,10 +277,14 @@ const Wallet = async () => {
                 payload: { account: currentAddr }
             });
 
-            window.ethereum.on('accountsChanged', function (currentAddr) {
+            window.ethereum.on('accountsChanged', function (accounts) {
+                
+                walletConnected = true;
+                currentAddr = accounts[0];
+
                 store.dispatch({
                     type: "GET_USER_INFO",
-                    payload: { account: currentAddr }
+                    payload: { account: accounts[0] }
                 });
             })
             
