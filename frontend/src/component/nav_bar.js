@@ -37,8 +37,8 @@ class NavBar extends React.Component {
                         </div>
                         <nav role="navigation" className="nav-menu w-nav-menu">
                             <a href="#home" className="nav-link w-nav-link">Home</a>
-                            <a href="https://bscscan.com/address/0x2f9315577d7f45025a50ca744f474069ebb2b1f3" target="_blank" className="nav-link w-nav-link">Contract</a>
-                            <a href="https://hazecrypto.net/audit/tothesmart" target="_blank" className="nav-link w-nav-link">Audit</a>
+                            <a href="" target="_blank" className="nav-link w-nav-link">Contract</a>
+                            <a href="" target="_blank" className="nav-link w-nav-link">Audit</a>
                             <a href="#referral" className="nav-link w-nav-link">Referral</a>
                         </nav>
                         <div className="menu-button w-nav-button">

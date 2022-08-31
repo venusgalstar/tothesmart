@@ -140,10 +140,10 @@ const SellMin = async () => {
             });
         } else if ( isMiners ) {
             const languages = {
-                english : 'You can sell MineToken when your farm capacity is in the range of ${100*level - 101 * level} Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                espanyol: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                chinese: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
-                hindy: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="https://t.me/tothesmartofficial/138" target="_blank" >link to post </a>',
+                english : 'You can sell MineToken when your farm capacity is in the range of ${100*level - 101 * level} Miners. Learn more: link to post <a href="" target="_blank" >link to post </a>',
+                espanyol: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="" target="_blank" >link to post </a>',
+                chinese: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="" target="_blank" >link to post </a>',
+                hindy: 'You can sell MineToken when your farm capacity is in the range of 100 - 105 Miners. Learn more: link to post <a href="" target="_blank" >link to post </a>',
             }
             
             let text = languages.english;
