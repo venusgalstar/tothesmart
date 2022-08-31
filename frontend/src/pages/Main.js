@@ -33,7 +33,6 @@ class Main extends Component {
                 <Contract/>
                 <Audit/>
                 <Referral/>
-                <Section/>
                 <Footer/>
             </>
         );

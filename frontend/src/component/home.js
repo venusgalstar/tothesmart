@@ -82,10 +82,11 @@ class Home extends React.Component {
 									<div className="link">
 										<div className="text-block-9">Tothesmart Whitepaper</div>
 									</div>
-									<div className="div-block-7"><a href="/PDF/TOTheSmart(EN).pdf" target="_blank" className="link-pdf w-inline-block">
-									<div className="text-block-10">English</div><div className="downl"></div></a><a href="/PDF/TOTheSmart(CHINA).pdf" target="_blank" className="link-pdf _2 w-inline-block">
-									<div className="text-block-10">Chinese</div><div className="downl"></div></a><a href="/PDF/TOTheSmart(Hindi).pdf" target="_blank" className="link-pdf _3 w-inline-block">
-									<div className="text-block-10">Hindi</div><div className="downl"></div></a><a href="/PDF/TOTheSmart(ES).pdf" target="_blank" className="link-pdf _4 w-inline-block"><div className="text-block-10">Spanish</div><div className="downl"></div></a></div>
+									<div className="div-block-7">
+										<a href="/PDF/TOTheSmart(EN).pdf" target="_blank" className="link-pdf _3 w-inline-block">
+											<div className="text-block-10">English</div><div className="downl"></div>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>

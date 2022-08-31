@@ -45,12 +45,6 @@ class NavBar extends React.Component {
                             <div className="icon-2 w-icon-nav-menu"></div>
                         </div>
                         <div className="panel-l">
-                            <div className="div-lang">
-                                <a href="china.html" className="flag w-inline-block"></a>
-                                <a href="esp.html" className="flag _2 w-inline-block"></a>
-                                <a href="index.html" className="flag _3 w-inline-block"></a>
-                                <a href="hindy.html" className="flag _4 w-inline-block"></a>
-                            </div>
                             <div>
                                 <button id="connect-btn" className="button w-button" onClick={this.Wallet}>
                                     {this.minimizeStr(this.props.account)}
