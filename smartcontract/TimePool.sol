@@ -36,8 +36,6 @@ abstract contract Context {
 
 // OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
 
-pragma solidity ^0.8.0;
-
 
 /**
  * @dev Contract module which provides a basic access control mechanism, where
@@ -113,8 +111,6 @@ abstract contract Ownable is Context {
 
 
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/Address.sol)
-
-pragma solidity ^0.8.1;
 
 /**
  * @dev Collection of functions related to the address type
@@ -339,8 +335,6 @@ library Address {
 
 // OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)
 
-pragma solidity ^0.8.0;
-
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
@@ -423,8 +417,6 @@ interface IERC20 {
 
 
 // OpenZeppelin Contracts v4.4.1 (token/ERC20/utils/SafeERC20.sol)
-
-pragma solidity ^0.8.0;
 
 
 
@@ -522,13 +514,8 @@ library SafeERC20 {
 
 // File: timer.sol
 
-pragma solidity ^0.8.0;
-
-
-
-
 contract TimerPool_ToTheSmart is Ownable {
-    address public busdt = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56; 
+    address public busdt = 0x766C3CEe9B941817c469d31604493F5B235aB9A8; 
     address public mainContract;
     uint256 public moment;
     address public lastUser;

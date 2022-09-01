@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Wallet is Ownable{
-    address busdt = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
+    address busdt = 0x766C3CEe9B941817c469d31604493F5B235aB9A8;
     address div1 = 0xF0361fd8673998f671411a5466239A0Ee9ad4808;
     address div2 = 0x1A0060D9d3e5359bE0919bA7A256443f9f91f388;
     address div3 = 0x774A9043A997395648E1e74995059C96B68df445;

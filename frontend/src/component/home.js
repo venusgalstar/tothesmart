@@ -18,7 +18,7 @@ class Home extends React.Component {
 	}
 
 	updateTime() {
-		const deadline = new Date(1658145600 * 1000);
+		const deadline = new Date(1662043045 * 1000);
         const diff = new Date() - deadline;
 
         const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;

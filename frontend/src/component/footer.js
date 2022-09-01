@@ -9,14 +9,14 @@ const Audit = () => {
 					<h2 className="h2">Community social networks</h2>
 					<div className="div-block-8">
 						<div className="div-block-10">
-							<a href="" target="_blank" className="itemsoc w-inline-block">
+							<a href="https://t.me/TothesmartF" target="_blank" className="itemsoc w-inline-block">
 								<div className="icon"></div>
 								<div className="text-block-12">Сhannel</div>
 							</a>
-							<a href="" target="_blank" className="itemsoc w-inline-block">
+							<a href="https://t.me/TothesmartFI" target="_blank" className="itemsoc w-inline-block">
 								<div className="icon"></div><div className="text-block-12">Сhat</div>
 							</a>
-							<a href="" target="_blank" className="itemsoc w-inline-block">
+							<a href="https://twitter.com/TothesmartF" target="_blank" className="itemsoc w-inline-block">
 								<div className="icon _2"></div>
 								<div className="text-block-12">Twitter</div>
 							</a>
