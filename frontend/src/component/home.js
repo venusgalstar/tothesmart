@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import store from "../store";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
@@ -8,6 +10,7 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			timeContractPassed: "00 : 00 : 00 : 00",
+			walletConnectStatus: false,
 		}
 
 		this.GetFreeMin = this.GetFreeMin.bind(this);
@@ -20,9 +23,6 @@ class Home extends React.Component {
 	updateTime() {
 		const deadline = new Date(1662086245 * 1000);
         const diff = deadline - new Date();
-
-		console.log("deadline", deadline);
-		console.log("now", new Date());
 
         const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
         const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
@@ -39,11 +39,24 @@ class Home extends React.Component {
             type: "UPDATE_CONTRACT_TIME",
             payload: { timeContractPassed: timeStarted }
         }); 
-
-		console.log(this.props.timeContractPassed);
     }
 
 	GetFreeMin(){
+		console.log("this.props.walletConnectStatus", this.props.walletConnectStatus);
+		
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}			
+
 		store.dispatch({
             type: "GET_FREE_MINER"
         }); 
@@ -51,6 +64,7 @@ class Home extends React.Component {
 
 	render(){
 		return <>
+			<ToastContainer/>
 			<div id="home" className="se1 wf-section">
 				<div className="div1">
 					<h1 className="h1">To The Smart</h1>
@@ -76,7 +90,7 @@ class Home extends React.Component {
 									<div className="text-block-3">
 										Play To Earn a mining farm built on the Binance Smart Chain blockchain. Buy miners, mine MineToken, and exchange it for BUSD or reinvest in your farm and increase your daily income.                                                                                          Participate in the ToTheSmart Ambassador program and earn income from every purchase of miners as well as from the income of your followers 7 generations deep. Your income is unlimited.</div>
 									<div className="video w-video w-embed">
-										<iframe width="560" height="315" src="https://www.youtube.com/embed/V548n_bXRQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+										<iframe width="560" height="315" src="https://www.youtube.com/embed/V548n_bXRQs" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 									</div>
 								</div>
 							</div>
@@ -103,6 +117,7 @@ class Home extends React.Component {
 const mapStateToProps = state => {
     return {
 		timeContractPassed: state.timeContractPassed,
+		walletConnectStatus: state.walletConnectStatus,
     };
 }
 

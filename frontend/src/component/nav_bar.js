@@ -49,9 +49,8 @@ class NavBar extends React.Component {
                         </div>
                         <nav role="navigation" className="nav-menu w-nav-menu">
                             <a href="#home" className="nav-link w-nav-link">Home</a>
-                            <a href="" target="_blank" className="nav-link w-nav-link">Contract</a>
+                            <a href="https://bscscan.com/address/0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6" target="_blank" className="nav-link w-nav-link">Contract</a>
                             <a href="" target="_blank" className="nav-link w-nav-link">Audit</a>
-                            <a href="#referral" className="nav-link w-nav-link">Referral</a>
                         </nav>
                         <div className="panel-l">
                             <div>

@@ -33,15 +33,14 @@ class Burger extends React.Component {
                           isOpen={this.state.menuOpen}
                           onStateChange={(state) => this.handleStateChange(state)}
                     >
-                       <a href="index.html#home" class="nav-link w-nav-link w--nav-link-open" 
+                       <a href="index.html#home" className="nav-link w-nav-link w--nav-link-open" 
                             onClick={() => this.closeMenu()} >Home</a>
-                        <a href="https://bscscan.com/address/0x2f9315577d7f45025a50ca744f474069ebb2b1f3" 
-                            target="_blank" class="nav-link w-nav-link w--nav-link-open" 
+                        <a href="https://bscscan.com/address/0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6" 
+                            target="_blank" className="nav-link w-nav-link w--nav-link-open" 
                             onClick={() => this.closeMenu()}>Contract</a>
                         <a href="https://hazecrypto.net/audit/tothesmart" target="_blank" 
-                            class="nav-link w-nav-link w--nav-link-open"
+                            className="nav-link w-nav-link w--nav-link-open"
                             onClick={() => this.closeMenu()} >Audit</a>
-                        <a href="index.html#referral" class="nav-link w-nav-link w--nav-link-open">Referral</a>
                     </Menu>
                 </div>
             </>

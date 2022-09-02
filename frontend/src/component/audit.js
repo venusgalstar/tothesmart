@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import store from "../store";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 
 class Audit extends React.Component {
@@ -7,6 +9,7 @@ class Audit extends React.Component {
 	constructor(props){
         super(props);
         this.state = {
+			account: "",
 			miner: "",
 			tokens: "",
 			reward: "",
@@ -15,7 +18,8 @@ class Audit extends React.Component {
 			lastUser: "",
 			moment: "",
             timePoolPassed: "",
-			stakeAmount:50
+			stakeAmount:50,
+			walletConnectStatus: "",
         }
 		
         this.timer = setInterval(() => {
@@ -30,12 +34,39 @@ class Audit extends React.Component {
     }
 
 	reinvest(){
+
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}			
+
 		store.dispatch({
 			type:"REINVEST",
 		})
 	}
 
 	SellMin(){
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}	
+
 		store.dispatch({
 			type:"SELL_MINER",
 		})
@@ -55,12 +86,38 @@ class Audit extends React.Component {
 	}
 
 	approveBUSD(){
+
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}	
+
 		store.dispatch({
 			type:"APPROVE_BUSD",
 		})
 	}
 
 	BuyMin(){
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}	
 		store.dispatch({
 			type:"BUY_MINER",
 		})
@@ -95,6 +152,7 @@ class Audit extends React.Component {
 
 	render (){
 		return <>
+			<ToastContainer />
 			<div id="Audit" className="se3 wf-section">
 				<div className="monitor">
 					<div className="timer">
@@ -207,7 +265,8 @@ const mapStateToProps = state => {
 		lastUser: state.lastUser,
 		timePoolPassed: state.timePoolPassed,
 		moment: state.moment,
-		stakeAmount: state.stakeAmount
+		stakeAmount: state.stakeAmount,
+		walletConnectStatus: state.walletConnectStatus,
     };
 }
 

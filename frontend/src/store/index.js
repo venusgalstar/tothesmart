@@ -19,7 +19,8 @@ const _initialState = {
     timePoolPassed: "00:00",
     timeContractPassed: "00 : 00 : 00 : 00",
     stakeAmount: 50,
-    referLink: "0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551"
+    referLink: "0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551",
+    walletConnectStatus: false,
 }
 
 const init = (init) => {
@@ -29,10 +30,11 @@ const init = (init) => {
 const reducer = (state = init(_initialState), action) => {
 
     if (action.type === 'GET_USER_INFO') {
-        console.log("account", action.payload.account);
+        console.log("GET_USER_INFO, account", action.payload.account);
         return Object.assign({}, state, {
             account: action.payload.account,
             referLink: action.payload.account,
+            walletConnectStatus: true,
         });
     } else if( action.type === 'CONNECT_WALLET'){
         Wallet();
