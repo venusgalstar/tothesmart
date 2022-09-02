@@ -75,11 +75,27 @@ class Audit extends React.Component {
 	onChangeValue(event, type) {
         var value = event.target.value;
         if (type === "stakeAmount") {
-            this.setState({ stakeAmount: value, ownUpdate: true });
+            store.dispatch({
+				type:"SET_STAKEAMOUNT",
+				payload:{stakeAmount: value}
+			});
         }       
     }
 
 	stakemax(){
+		if( this.props.walletConnectStatus != true ){
+			toast.info("Please connect metamask this website.", {
+				position: "top-center",
+				autoClose: 3000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			return;
+		}	
+
 		store.dispatch({
 			type:"SET_MAX_STAKEAMOUNT",
 		});
@@ -196,7 +212,7 @@ class Audit extends React.Component {
 										<div className="div-field">
 											<input id="stake-input" className="text-field w-input placeholder" 
 												placeholder="Minimun 50 BUSD" min="50" 
-												value={this.state.stakeAmount}
+												value={this.props.stakeAmount}
 												onChange={(event)=>{this.onChangeValue(event,"stakeAmount")}}/>
 											<div className="iconka">
 												<div id="stake-max-ctr">
