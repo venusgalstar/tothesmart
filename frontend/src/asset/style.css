@@ -2995,6 +2995,10 @@ textarea.w-select {
    .icon._2 {
      background-image: url("./Twitter.svg");
    }
+
+   .icon._3 {
+    background-image: url("./discord.png");
+  }
    
    .text-block-11 {
      margin-top: 98px;

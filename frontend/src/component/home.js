@@ -22,7 +22,7 @@ class Home extends React.Component {
 
 	updateTime() {
 		const deadline = new Date(1662086245 * 1000);
-        const diff = deadline - new Date();
+        const diff = new Date() - deadline;
 
         const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
         const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
@@ -90,7 +90,7 @@ class Home extends React.Component {
 									<div className="text-block-3">
 										Play To Earn a mining farm built on the Binance Smart Chain blockchain. Buy miners, mine MineToken, and exchange it for BUSD or reinvest in your farm and increase your daily income.                                                                                          Participate in the ToTheSmart Ambassador program and earn income from every purchase of miners as well as from the income of your followers 7 generations deep. Your income is unlimited.</div>
 									<div className="video w-video w-embed">
-										<iframe width="560" height="315" src="https://www.youtube.com/embed/V548n_bXRQs" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+										<iframe width="560" height="315" src="" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 									</div>
 								</div>
 							</div>

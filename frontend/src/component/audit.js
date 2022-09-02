@@ -18,7 +18,7 @@ class Audit extends React.Component {
 			lastUser: "",
 			moment: "",
             timePoolPassed: "",
-			stakeAmount:50,
+			stakeAmount:0,
 			walletConnectStatus: "",
         }
 		

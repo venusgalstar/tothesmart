@@ -181,8 +181,9 @@ const reinvest = async () => {
 }
 
 const BuyMin = async (refer, amount) => {
+    console.log(amount);
     if (await Wallet()) {
-        contract.methods.buyMiners(refer, web3.utils.toWei(amount))
+        contract.methods.buyMiners(refer, web3.utils.toWei(amount.toString(), 'ether'))
             .send({ from: currentAddr, gasPrice: gasPrice, });
     }
 }
