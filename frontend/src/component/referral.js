@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import { connect } from 'react-redux';
+import store from "../store";
 
 class Referral extends React.Component {
 	constructor(props){
@@ -8,7 +9,21 @@ class Referral extends React.Component {
         this.state = {
 			referLink: "",
         }
+
+		this.onChangeValue = this.onChangeValue.bind(this);
     }
+	
+	onChangeValue(event, type) {
+		var value = event.target.value;
+		// if (type === "referLink") {
+		// 	this.setState({ stakeAmount: value, ownUpdate: true });
+		// }  
+		store.dispatch({
+			type:"UPDATE_REFERLINK",
+			payload:{referLink:value}
+		})   
+	}
+
 	render(){
 		return (<>
 		<div id="referral" className="se5 wf-section">
@@ -132,7 +147,8 @@ class Referral extends React.Component {
 								<div className="text-block-16">Your referral rewards will be sent straight to your wallet, you don't have to withdraw it.</div>
 								<div className="text-block-17">Your referral link</div>
 								<div className="div-block-15">
-									<input id="referral-link" className="itemfield" type="text" value={this.props.referLink}/>
+									<input id="referral-link" className="itemfield" type="text" value={this.props.referLink} 
+										onChange={(event)=>{this.onChangeValue(event,"referLink")}}/>
 									<button id="copy-referral-link" className="referal-but w-button">Copy</button>
 							</div>
 						</div>

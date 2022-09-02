@@ -20,6 +20,10 @@ const Audit = () => {
 								<div className="icon _2"></div>
 								<div className="text-block-12">Twitter</div>
 							</a>
+							<a href="https://discord.gg/CSs9aJTMFn" target="_blank" className="itemsoc w-inline-block">
+								<div className="icon _2"></div>
+								<div className="text-block-12">Discord</div>
+							</a>
 						</div>
 						<div className="div-footer-white">
 							<div className="link"></div>

@@ -19,7 +19,7 @@ const _initialState = {
     timePoolPassed: "00:00",
     timeContractPassed: "00 : 00 : 00 : 00",
     stakeAmount: 50,
-    referLink: "0x00000000000000000000000000000000000"
+    referLink: "0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551"
 }
 
 const init = (init) => {
@@ -90,6 +90,10 @@ const reducer = (state = init(_initialState), action) => {
         reinvest();
     } else if( action.type === 'SELL_MINER'){
         SellMin();
+    } else if( action.type === 'UPDATE_REFERLINK'){
+        return Object.assign({}, state, {
+            referLink: action.payload.referLink,
+        });
     }
     return state;
 }

@@ -3710,6 +3710,7 @@ textarea.w-select {
    
    .video {
      /* background-image: url("../images/background-image.svg"); */
+     padding-top: 56.17021276595745%;
      background-position: 0px 0px;
      background-size: auto;
    }
@@ -5559,3 +5560,146 @@ textarea.w-select {
      font-style: italic;
      font-display: swap;
    }
+
+
+
+
+   /***********************/
+   @media only screen and (min-width: 992px) {
+    .burger-container {
+      display: none;
+    }
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .hide-navigation {
+      display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 992px) and (max-width: 1500px) {
+    .header-main-btn-container {
+      position: fixed;
+      top: -110px;
+    }
+    .menu {
+      justify-content: right !important;
+      padding-right: 100px;
+    }
+  }
+  
+  .mobile-logo-img {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8em;
+  }
+  
+  /* Position and sizing of burger button */
+  .bm-burger-button {
+    position: fixed;
+    width: 55px;
+    height: 55px;
+    right: 250px;
+    top: 10px;
+    float: right;
+    background: #df6bec;
+    border: 10px solid #df6bec;    
+    border-radius: 15px;
+    -webkit-order: 3;
+    -ms-flex-order: 3;
+    order: 3;
+  }
+  
+  .burger-logo {
+    width: 70%;
+    height: auto;
+    position: absolute;
+    padding-left: 24px;
+    padding-top: 18px;
+    max-width: 500px;
+  }
+  
+  /* Color/shape of burger icon bars */
+  .bm-burger-bars {
+    background: #fff;
+    height: 8% !important;
+  }
+  
+  /* Color/shape of burger icon bars on hover*/
+  .bm-burger-bars-hover {
+    background: rgba(25, 36, 79, 0.97);
+  }
+  
+  /* Position and sizing of clickable cross button */
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: #bdc3c7;
+  }
+  
+  /*
+  Sidebar wrapper styles
+  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+  */
+  .bm-menu-wrap {
+    position: fixed;
+    height: 100%;
+    max-width: 300px;
+    background-color:rgba(25, 36, 79, 0.97) ;
+  }
+  
+  /* General sidebar styles */
+  .bm-menu {
+    background-color: rgb(36, 36, 36);
+    padding: 0;
+    font-size: 1.15em;
+    overflow: hidden !important;
+  }
+  
+  .bm-menu a {
+    padding: 0.8em;
+    box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+  }
+  
+  .bm-menu a:hover {
+    background: #da392b;
+    background: linear-gradient(120deg, rgba(25, 36, 79, 0.97), rgba(185, 199, 255, 0.1));
+    box-shadow: inset 0 -1px rgb(0 0 0 / 0%);
+    color: #ffffff;
+  }
+  
+  /* Morph shape necessary with bubble or elastic */
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  /* Wrapper for item list */
+  .bm-item-list {
+    color: rgba(25, 36, 79, 0.97);
+    background-color: rgba(25, 36, 79, 0.97);
+    padding: 0;
+  }
+  
+  /* Individual item */
+  .bm-item {
+    display: inline-block;
+    background-color: rgba(25, 36, 79, 0.97);
+  }
+  
+  /* Styling of overlay */
+  .bm-overlay {
+    background: rgba(25, 36, 79, 0.97);
+    width: 100vw !important;
+  }
+  
+  
+  

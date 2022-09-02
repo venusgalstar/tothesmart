@@ -1,4 +1,5 @@
 import NavBar from "../component/nav_bar";
+import Burger from "../component/menu";
 import Home from "../component/home";
 import Contract from "../component/contract";
 import Audit from "../component/audit";
@@ -29,6 +30,7 @@ class Main extends Component {
         return (
             <>
                 <NavBar/>
+                <Burger/>
                 <Home/>
                 <Contract/>
                 <Audit/>

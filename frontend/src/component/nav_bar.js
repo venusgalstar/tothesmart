@@ -8,9 +8,21 @@ class NavBar extends React.Component {
         this.state = {
             account: "Сonnect wallet",
             moment: "",
+            menuOpen: false,
         }
 
         this.Wallet = this.Wallet.bind(this);
+    }
+
+    // This keeps your state in sync with the opening/closing of the menu
+    // via the default means, e.g. clicking the X, pressing the ESC key etc.
+    handleStateChange (state) {
+        this.setState({menuOpen: state.isOpen})
+    }
+
+    // This can be used to close the menu, e.g. when a user clicks a menu item
+    closeMenu () {
+        this.setState({menuOpen: false})
     }
 
     // Helper for minimize address to => '0x000...00001'
@@ -41,9 +53,6 @@ class NavBar extends React.Component {
                             <a href="" target="_blank" className="nav-link w-nav-link">Audit</a>
                             <a href="#referral" className="nav-link w-nav-link">Referral</a>
                         </nav>
-                        <div className="menu-button w-nav-button">
-                            <div className="icon-2 w-icon-nav-menu"></div>
-                        </div>
                         <div className="panel-l">
                             <div>
                                 <button id="connect-btn" className="button w-button" onClick={this.Wallet}>
