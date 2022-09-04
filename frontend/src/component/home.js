@@ -69,9 +69,9 @@ class Home extends React.Component {
 				<div className="div1">
 					<h1 className="h1">To The Smart</h1>
 					<div className="text-block"></div>
-					<div className="embed">
+					{/* <div className="embed">
 						<div className="text-block-2" id="timerstart" >{this.props.timeContractPassed}</div>
-					</div>
+					</div> */}
 					<button className="button-start w-button" onClick={this.GetFreeMin.bind(this)}>  
 						Get Free Miners 10 BUSD
 					</button>
