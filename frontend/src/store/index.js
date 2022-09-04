@@ -19,7 +19,7 @@ const _initialState = {
     timePoolPassed: "00:00",
     timeContractPassed: "00 : 00 : 00 : 00",
     stakeAmount: 50,
-    referLink: "0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551",
+    referLink: "",
     walletConnectStatus: false,
 }
 
@@ -93,8 +93,10 @@ const reducer = (state = init(_initialState), action) => {
     } else if( action.type === 'SELL_MINER'){
         SellMin();
     } else if( action.type === 'UPDATE_REFERLINK'){
+        const refAddr = web3.utils.isAddress(action.payload.referLink)?action.payload.referLink:config.Wallet;
+
         return Object.assign({}, state, {
-            referLink: action.payload.referLink,
+            referLink: refAddr,
         });
     }
     return state;
@@ -183,7 +185,11 @@ const reinvest = async () => {
 const BuyMin = async (refer, amount) => {
     console.log(amount);
     if (await Wallet()) {
-        contract.methods.buyMiners(refer, web3.utils.toWei(amount.toString(), 'ether'))
+        const ref = web3.utils.isAddress(refer)
+			? refer
+			: config.Wallet;
+
+        contract.methods.buyMiners(ref, web3.utils.toWei(amount.toString(), 'ether'))
             .send({ from: currentAddr, gasPrice: gasPrice, });
     }
 }

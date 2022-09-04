@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Web3 from "web3";
 
 import { connect } from 'react-redux';
 import store from "../store";
@@ -11,17 +12,35 @@ class Referral extends React.Component {
         }
 
 		this.onChangeValue = this.onChangeValue.bind(this);
+		this.copyTo = this.copyTo.bind(this);
     }
-	
+
+	componentDidMount(){
+		const queryString = window.location.search;
+		// console.log(queryString);
+		const urlParams = new URLSearchParams(queryString);
+		const refAddr = urlParams.get('ref')
+		console.log(refAddr);
+
+		store.dispatch({
+			type:"UPDATE_REFERLINK",
+			payload:{referLink:refAddr}
+		})  
+	}
+		
 	onChangeValue(event, type) {
 		var value = event.target.value;
 		// if (type === "referLink") {
 		// 	this.setState({ stakeAmount: value, ownUpdate: true });
 		// }  
-		store.dispatch({
-			type:"UPDATE_REFERLINK",
-			payload:{referLink:value}
-		})   
+		// store.dispatch({
+		// 	type:"UPDATE_REFERLINK",
+		// 	payload:{referLink:value}
+		// })   
+	}
+
+	copyTo(){
+		navigator.clipboard.writeText("https://tothesmart.finance/?ref=" + this.props.referLink);
 	}
 
 	render(){
@@ -149,7 +168,8 @@ class Referral extends React.Component {
 								<div className="div-block-15">
 									<input id="referral-link" className="itemfield" type="text" value={this.props.referLink} 
 										onChange={(event)=>{this.onChangeValue(event,"referLink")}}/>
-									<button id="copy-referral-link" className="referal-but w-button">Copy</button>
+									<button id="copy-referral-link" className="referal-but w-button"
+										onClick={this.copyTo}>Copy</button>
 							</div>
 						</div>
 					</div>

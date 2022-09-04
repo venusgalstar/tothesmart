@@ -11,6 +11,7 @@ var config = {
         CONTRACT_ADDRESS : "0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6",
         tokenAddr : "0xe9e7cea3dedca5984780bafc599bd69add087d56",
         POOL : "0x8f3BF11b7F04D32D6ea1e94Ef9c5A85c559470C1",
+        Wallet :"0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551",
         ABI : ABI,
         tokenAbi : tokenAbi,
         POOLABI : POOLABI
