@@ -105,8 +105,6 @@ const reducer = (state = init(_initialState), action) => {
 }
 
 const getContractInfo = async () => {
-
-    console.log("abcde");
     
     tokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
         store.dispatch({

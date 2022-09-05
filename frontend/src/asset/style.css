@@ -5568,16 +5568,65 @@ textarea.w-select {
 
 
 
-   /***********************/
-   @media only screen and (min-width: 992px) {
+  /***********************/
+  @media only screen and (min-width: 992px ) {
     .burger-container {
       display: none;
     }
   }
+
+  @media screen and (max-width:479px) {
+    .bm-burger-button {
+      position: fixed;
+      width: 50px;
+      height: 45px;
+      right: 150px;
+      top: 15px;
+      float: right;
+      background: #df6bec;
+      border: 10px solid #df6bec;    
+      border-radius: 15px;
+      -webkit-order: 3;
+      -ms-flex-order: 3;
+      order: 3;
+    }
+  }
+
+  @media only screen and (min-width: 479px) and (max-width: 764px) {
+    .bm-burger-button {
+      position: fixed;
+      width: 50px;
+      height: 45px;
+      right: 200px;
+      top: 15px;
+      float: right;
+      background: #df6bec;
+      border: 10px solid #df6bec;    
+      border-radius: 15px;
+      -webkit-order: 3;
+      -ms-flex-order: 3;
+      order: 3;
+    }
+  }
   
-  @media only screen and (max-width: 992px) {
+  @media only screen and (min-width: 764px) and (max-width: 992px)  {
     .hide-navigation {
       display: none;
+    }
+
+    .bm-burger-button {
+      position: fixed;
+      width: 50px;
+      height: 45px;
+      right: 200px;
+      top: 15px;
+      float: right;
+      background: #df6bec;
+      border: 10px solid #df6bec;    
+      border-radius: 15px;
+      -webkit-order: 3;
+      -ms-flex-order: 3;
+      order: 3;
     }
   }
   
@@ -5590,6 +5639,9 @@ textarea.w-select {
       justify-content: right !important;
       padding-right: 100px;
     }
+
+    
+    /* Position and sizing of burger button */
   }
   
   .mobile-logo-img {
@@ -5598,21 +5650,6 @@ textarea.w-select {
     padding: 0.8em;
   }
   
-  /* Position and sizing of burger button */
-  .bm-burger-button {
-    position: fixed;
-    width: 55px;
-    height: 55px;
-    right: 200px;
-    top: 10px;
-    float: right;
-    background: #df6bec;
-    border: 10px solid #df6bec;    
-    border-radius: 15px;
-    -webkit-order: 3;
-    -ms-flex-order: 3;
-    order: 3;
-  }
   
   .burger-logo {
     width: 70%;
