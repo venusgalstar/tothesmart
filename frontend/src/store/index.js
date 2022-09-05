@@ -106,10 +106,32 @@ const reducer = (state = init(_initialState), action) => {
 
 const getContractInfo = async () => {
     
-    tokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
+    gTokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
         store.dispatch({
             type: "CONTRACT_BALANCE",
             payload: { contractBalance: ` ${(res / 1e18).toFixed(0)} BUSD` }
+        });
+    })
+
+    gPoolContract.methods.moment().call().then(res => {
+        console.log("moment", res);
+        store.dispatch({
+            type: "UPDATE_TIME",
+            payload: { moment: res}
+        });
+    })
+
+    gTokenContract.methods.balanceOf(config.POOL).call().then(res => {
+        store.dispatch({
+            type: "POOL_BALANCE",
+            payload: { poolBalance: ` ${(res / 1e18).toFixed(6)} BUSD` }
+        });
+    })
+
+    gPoolContract.methods.lastUser().call().then(res => {
+        store.dispatch({
+            type: "LAST_USER",
+            payload: { lastUser: res }
         });
     })
 }
@@ -356,29 +378,6 @@ const Connect = () => {
                     }
                 })
             }
-
-            poolContract.methods.moment().call().then(res => {
-                console.log("moment", res);
-                store.dispatch({
-                    type: "UPDATE_TIME",
-                    payload: { moment: res}
-                });
-            })
-
-            tokenContract.methods.balanceOf(config.POOL).call().then(res => {
-                store.dispatch({
-                    type: "POOL_BALANCE",
-                    payload: { poolBalance: ` ${(res / 1e18).toFixed(6)} BUSD` }
-                });
-            })
-
-            poolContract.methods.lastUser().call().then(res => {
-                store.dispatch({
-                    type: "LAST_USER",
-                    payload: { lastUser: res }
-                });
-            })
-
         }
     }, 7000);
 }
