@@ -25,7 +25,7 @@ class Referral extends React.Component {
 		store.dispatch({
 			type:"UPDATE_REFERLINK",
 			payload:{referLink:refAddr}
-		})  
+		});  
 	}
 		
 	onChangeValue(event, type) {

@@ -98,10 +98,23 @@ const reducer = (state = init(_initialState), action) => {
         return Object.assign({}, state, {
             referLink: refAddr,
         });
+    } else if( action.type === 'GET_CONTRACT_INFO'){
+        getContractInfo();
     }
     return state;
 }
 
+const getContractInfo = async () => {
+
+    console.log("abcde");
+    
+    tokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
+        store.dispatch({
+            type: "CONTRACT_BALANCE",
+            payload: { contractBalance: ` ${(res / 1e18).toFixed(0)} BUSD` }
+        });
+    })
+}
 const SellMin = async () => {
     if (await Wallet()) {
 
@@ -358,13 +371,6 @@ const Connect = () => {
                 store.dispatch({
                     type: "POOL_BALANCE",
                     payload: { poolBalance: ` ${(res / 1e18).toFixed(6)} BUSD` }
-                });
-            })
-
-            tokenContract.methods.balanceOf(config.CONTRACT_ADDRESS).call().then(res => {
-                store.dispatch({
-                    type: "CONTRACT_BALANCE",
-                    payload: { contractBalance: ` ${(res / 1e18).toFixed(0)} BUSD` }
                 });
             })
 

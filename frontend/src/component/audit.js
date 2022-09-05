@@ -33,6 +33,12 @@ class Audit extends React.Component {
 		this.SellMin = this.SellMin.bind(this);
     }
 
+	componentDidMount(){
+		store.dispatch({
+			type:"GET_CONTRACT_INFO",
+		});  
+	}
+
 	reinvest(){
 
 		if( this.props.walletConnectStatus != true ){
