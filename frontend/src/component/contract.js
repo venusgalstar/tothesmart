@@ -19,7 +19,7 @@ class Contract extends React.Component {
 							<div className="div-block-5">
 
 							</div>
-							<a href="" target="_blank" className="div-block-5 w-inline-block">
+							<a href="https://bscscan.com/address/0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6" target="_blank" className="div-block-5 w-inline-block">
 								<div className="point" data-ix="aniim-online">
 								</div>
 								<div className="text-block-23">View</div>
