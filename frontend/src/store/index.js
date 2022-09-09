@@ -122,6 +122,7 @@ const getContractInfo = async () => {
     })
 
     gTokenContract.methods.balanceOf(config.POOL).call().then(res => {
+        console.log("POOL", config.POOL, res);
         store.dispatch({
             type: "POOL_BALANCE",
             payload: { poolBalance: ` ${(res / 1e18).toFixed(6)} BUSD` }

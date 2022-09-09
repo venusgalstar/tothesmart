@@ -2259,6 +2259,34 @@ textarea.w-select {
      -ms-flex-pack: justify;
      justify-content: space-between;
    }
+
+   .div3 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 97%;
+    max-width: 1300px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+  .social_link{
+    max-width: 300px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .newsLinkYahoo{
+    background-image: url("./fin5.png");
+  }
    
    .divlogo {
      display: -webkit-box;

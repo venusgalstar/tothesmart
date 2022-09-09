@@ -43,7 +43,7 @@ const Audit = () => {
 						<a href="#home" className="link-2">Home</a>
 						<a href="https://bscscan.com/address/0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6" target="_blank" className="link-2">Contract</a>
 						{/* <a href="" target="_blank" className="link-2">Audit</a> */}
-						<a href="#referral" className="nav-link w-nav-link">Referral</a>
+						<a href="#referral" className="link-2">Referral</a>
 					</nav>
 					<div className="text-block-11">To The Smart 2022.</div>
 				</div>

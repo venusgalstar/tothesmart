@@ -3,6 +3,13 @@ import store from "../store";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
+import fin5png from "../asset/fin5.png";
+import fin6png from "../asset/fin6.png";
+import fin7png from "../asset/fin7.png";
+import fin8png from "../asset/fin8.png";
+import marketwatch from "../asset/marketwatch.png";
+import abnewswire from "../asset/abnewswire.png";
+import getnews from "../asset/getnews.png";
 
 class Home extends React.Component {
 
@@ -79,6 +86,17 @@ class Home extends React.Component {
 						<div>The bonus can only be received once</div>
 					</div>
 				</div>
+				<div className='div3' >
+					<a target="_blank" href="https://www.abnewswire.com/pressreleases/20000-in-one-minute-on-play-to-earn-game-tothesmartfinance_615073.html">
+						<img className='social_link' src={abnewswire}></img>
+					</a>
+					<a target="_blank" href="https://www.marketwatch.com/press-release/20000-in-one-minute-on-play-to-earn-game-tothesmartfinance-2022-09-06?mod=search_headline">
+						<img className='social_link' src={marketwatch}></img>
+					</a>
+					<a target="_blank" href="https://www.getnews.info/1253717/20000-in-one-minute-on-play-to-earn-game-tothesmartfinance.html">
+						<img className='social_link' src={getnews}></img>
+					</a>
+				</div>
 				<div className="div2">
 					<div className="divcontentl-what">
 						<div className="div-block-3">
@@ -90,7 +108,7 @@ class Home extends React.Component {
 									<div className="text-block-3">
 										Play To Earn a mining farm built on the Binance Smart Chain blockchain. Buy miners, mine MineToken, and exchange it for BUSD or reinvest in your farm and increase your daily income.                                                                                          Participate in the ToTheSmart Ambassador program and earn income from every purchase of miners as well as from the income of your followers 7 generations deep. Your income is unlimited.</div>
 									<div className="video w-video w-embed">
-										<iframe width="560" height="315" src="https://youtu.be/RyKxjMP0K5U" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen=""></iframe>
+										<iframe width="560" height="315" src="https://youtu.be/Wzws8g5sH68" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen=""></iframe>
 									</div>
 								</div>
 							</div>
