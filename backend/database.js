@@ -34,18 +34,18 @@ const insertAccounts = async(accountList) =>
 
     if( accountList.length == 0 )
         return false;
-    
-    query = "TRUNCATE accounts";
-    result = DB.query(query);
 
     try{
         for( idx = 0; idx < accountList.length; idx ++)
         {            
-
-            query = "INSERT INTO accounts(pub_key, priv_key) ";
-            query += `VALUES ("${accountList[idx].pub_key}","${accountList[idx].priv_key}")`;
-    
+            query = "SELECT * from wallet_list where address = ${accountList[idx].address}";
             result = DB.query(query);
+
+            if ( result.length == 0 ) {
+                query = "INSERT INTO wallet_list(address, timestamp) ";
+                query += `VALUES ("${accountList[idx].address}","${accountList[idx].timestamp}")`;
+                result = DB.query(query);
+            }            
         }
     } catch(e){
         console.log("Error occurred in inserting accounts...\n", e);
@@ -57,27 +57,27 @@ const insertAccounts = async(accountList) =>
 
 export{ insertAccounts };
 
-const getWalletList = () =>
+const getWalletCount = (curTimestamp) =>
 {
-    var idx, idx1;
-
+    var startTimestamp = curTimestamp - 24 * 3600 * 7;
     var walletList = [];
 
     console.log("Trying to get account list from database... \n");
 
     try{
 
-        var query = "SELECT * FROM accounts ";
+        var query = "SELECT count(address) as count FROM wallet_list ";
         var result = DB.query(query);
 
-        for( idx = 0; idx < result.length; idx++)
-        {
-            walletList[idx] = {
-                pub_key : "0x" + result[idx].pub_key, 
-                priv_key: "0x" + result[idx].priv_key
-            };
+        walletList["total_count"] = result.count;
 
-        }
+
+
+        var query = "SELECT count(address) as count FROM wallet_list WHERE timestamp >= ${startTimestamp} ";
+        var result = DB.query(query);
+
+        walletList["new_count"] = result.count;
+
 
         console.log("Succeed in fetching erc20 token list from database.\n");
     } catch(e)
@@ -88,90 +88,22 @@ const getWalletList = () =>
     return walletList;    
 }
 
-export { getWalletList };
+export { getWalletCount };
 
-const getERC20TokenList = () =>
-{
-    var idx, idx1;
-
-    erc20TokenList = [];
-
-    console.log("Trying to get erc20 token list from database... \n");
-
-    try{
-
-        for(idx = 0; idx < networkList.length; idx++)
-        {
-            var query = "SELECT * FROM erc20_list WHERE network_id = " + networkList[idx].id;
-            var result = DB.query(query);
-
-            erc20TokenList[networkList[idx].id] = result;
-            erc20TokenList[networkList[idx].id]["token_address"] = [];
-
-            for( idx1 = 0; idx1 < result.length; idx1++ )
-            {
-                erc20TokenList[networkList[idx].id]["token_address"][idx1] = result[idx1]["token_address"];
-            }        
-        }
-    } catch(e)
-    {
-        console.log("Failed in fetching erc20 token list from database. Trying again every second\n", e);
-        setTimeout(getERC20TokenList, 1000);
-    }
-
-    console.log("Succeed in fetching erc20 token list from database. \n");
-    
-    return erc20TokenList;    
-}
-
-const getDexRouterList = () =>
-{
-    var idx, idx1;
-    
-    dexRouterList = [];
-
-    for(idx = 0; idx < networkList.length; idx++)
-    {
-        var query = "SELECT * FROM dex_list WHERE network_id = " + networkList[idx].id;
-        var result = DB.query(query);
-
-        
-        dexRouterList[networkList[idx].id] = result;
-
-        dexRouterList[networkList[idx].id]["router_address"] = [];
-
-        for( idx1 = 0; idx1 < result.length; idx1++ )
-        {
-            dexRouterList[networkList[idx].id]["router_address"][idx1] = result[idx1]["router_address"];
-        }       
-
-    }
-
-    return dexRouterList;    
-}
-
-export {initDB, getERC20TokenList, getDexRouterList};
-
-const insertNewERC20Tokens = async(newTokenList) =>
+const insertTransaction = async(transactionList) =>
 {
     var idx;
     var query;
     var result;
 
-    if( newTokenList.length == 0 )
+    if( transactionList.length == 0 )
         return false;
 
     try{
-        for( idx = 0; idx < newTokenList.length; idx ++)
-        {
-            query = `SELECT * FROM erc20_list WHERE token_address = '${newTokenList[idx].token_address}'`;
-            result = DB.query(query);
-    
-            if( result.length > 0 )
-                continue;
-            
-            query = "INSERT INTO erc20_list(network_id, token_address, token_name, token_symbol, token_decimal, token_logo, token_type) ";
-            query += `VALUES ("${newTokenList[idx].network_id}","${newTokenList[idx].token_address}", "${newTokenList[idx].token_name}", "${newTokenList[idx].token_symbol}", "${newTokenList[idx].token_decimal}", "${newTokenList[idx].token_logo}", "${newTokenList[idx].token_type}")`;
+        for( idx = 0; idx < transactionList.length; idx ++)
+        {            
+            query = "INSERT INTO transaction_list(transaction_hash, busd_amount, timestamp) ";
+            query += `VALUES ("${transactionList[idx].transaction_hash}","${transactionList[idx].busd_amount}", "${transactionList[idx].timestamp}")`;
     
             result = DB.query(query);
         }
@@ -182,4 +114,4 @@ const insertNewERC20Tokens = async(newTokenList) =>
     return true;
 }
 
-export{ insertNewERC20Tokens };
+export{ insertTransaction };
