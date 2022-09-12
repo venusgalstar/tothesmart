@@ -12,8 +12,8 @@ var config = {
     "NET_RPC"   : "https://bsc-dataseed1.binance.org",
 
     "CONTRACT_ABI"   : abiContract,
-    "CONTRACT_ADDR"  : "0x25696251e8409992824A9B7Bad6d92790867e909"
-
+    "CONTRACT_ADDR"  : "0x25696251e8409992824A9B7Bad6d92790867e909",
+    "START_BLOCKNUM" : 20957483
 }
 
 export {config};

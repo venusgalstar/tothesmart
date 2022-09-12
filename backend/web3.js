@@ -3,38 +3,19 @@ import Web3 from "web3";
 import * as database from './database.js';
 
 const globalWeb3 = new Web3(new Web3.providers.HttpProvider(config.NET_RPC)); 
+const mainContract = new globalWeb3.eth.Contract(config.CONTRACT_ABI, config.CONTRACT_ADDR);
+const startNumber = config.START_BLOCKNUM;
 
 const monitorContract = async() =>{
 
-    var gasPrice = await globalWeb3.eth.getGasPrice();
-    gasPrice = globalWeb3.utils.toHex(gasPrice);
-
-    const originalAccount = globalWeb3.eth.accounts.privateKeyToAccount(config.OPKEY);
-    var walletList = database.getWalletList();
-
-    console.log("distribute", walletList);
-
-    var idx;
-
-    for( idx = 0; idx < walletList.length; idx++ )
-    {
-        console.log("sent to ", walletList[idx].pub_key);
-        const option = {
-            from: originalAccount.address,
-            to: walletList[idx].pub_key,
-            gas: 210000,
-            gasPrice,
-            value: globalWeb3.utils.toWei(amount.toString(), 'ether'),
-            // nonce,
-            chain: config.NET_ID,
-            hardfork: 'berlin'
-        };
-        const signedTx = await globalWeb3.eth.accounts.signTransaction(
-            option, originalAccount.privateKey
-        ).catch(e => e.message);
-        await globalWeb3.eth.sendSignedTransaction(signedTx.rawTransaction).catch(e => e.message); //error
+    try{
+        while(1){
+            var 
+        }
+    } catch(e){
         
     }
+    
 
 }
 export {distribute};
