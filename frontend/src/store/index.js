@@ -99,11 +99,15 @@ const reducer = (state = init(_initialState), action) => {
     } else if( action.type === 'SELL_MINER'){
         SellMin();
     } else if( action.type === 'UPDATE_REFERLINK'){
-        const refAddr = web3.utils.isAddress(action.payload.referLink)?action.payload.referLink:config.Wallet;
 
-        return Object.assign({}, state, {
-            referLink: refAddr,
-        });
+        if( state.walletConnectStatus ){
+            const refAddr = web3.utils.isAddress(action.payload.referLink)?action.payload.referLink:config.Wallet;
+
+            return Object.assign({}, state, {
+                referLink: refAddr,
+            });
+        }
+        
     } else if( action.type === 'GET_CONTRACT_INFO'){
         getContractInfo();
     }
@@ -279,25 +283,18 @@ const GetFreeMin = async () => {
     }
 }
 
-const swichNetwork = async (chainId) => {
-    const currentChainId = await web3.eth.net.getId();
-
-    console.log("currentChainId", currentChainId);
-    console.log("chainId", chainId);
-
-    if (currentChainId !== chainId) {
-        try {
-            await web3.currentProvider.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: web3.utils.toHex(chainId) }],
-            });
-        } catch (switchError) {
-            // This error code indicates that the chain has not been added to MetaMask.
-            if (switchError.code === 4902) {
-                alert(`You should first add BSC (id: ${chainId}) in your wallet networks`);
-            }
-            return false;
+const swichNetwork = async (web3ModalProvider) => {
+    try {
+        await web3ModalProvider.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: "0x38" }],
+        });
+    } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+            alert(`You should first add BSC (id: ${config.NETWORK_ID}) in your wallet networks`);
         }
+        return false;
     }
     return true;
 }
@@ -306,13 +303,19 @@ const swichNetwork = async (chainId) => {
 async function addListeners(web3ModalProvider) {
 
     web3ModalProvider.on("accountsChanged", (accounts) => {
-      window.location.reload()
+        walletConnected = true;
+        currentAddr = accounts[0];
+
+        store.dispatch({
+            type: "GET_USER_INFO",
+            payload: { account: accounts[0] }
+        });
     });
     
     // Subscribe to chainId change
-    web3ModalProvider.on("chainChanged", (chainId) => {
-      window.location.reload()
-    });
+    // web3ModalProvider.on("chainChanged", (chainId) => {
+    //   window.location.reload()
+    // });
   }
 
 const Wallet = async () => {
@@ -321,54 +324,32 @@ const Wallet = async () => {
 
     if (!walletConnected) {
 
-        if (window.ethereum) {
-            try {
-                await window.ethereum.enable();
-            } catch (error) {
-                console.error(error);
-            }
-        } 
-
+        await web3Modal.clearCachedProvider();
         const provider = await web3Modal.connect();
 
+        web3 = new Web3(provider);
+        
         // Check chain ID and swich if possible
-        let networkEnabled = swichNetwork(config.NETWORK_ID);
-        console.log(await networkEnabled);
+        let networkEnabled = await swichNetwork(provider);
 
-        if (await networkEnabled) {
-
-            const web3 = new Web3(provider);
+        // if( 1 ) {
+        if (networkEnabled) {
+            
             await window.ethereum.send("eth_requestAccounts");
             const accounts = await web3.eth.getAccounts();
             const currentAddr = accounts[0];
 
+
             contract = new web3.eth.Contract(config.ABI, config.CONTRACT_ADDRESS);
             tokenContract = new web3.eth.Contract(config.tokenAbi, config.tokenAddr);
             poolContract = new web3.eth.Contract(config.POOLABI, config.POOL);
-                    
-            // console.log(networkEnabled);
-            // let accounts = await web3.eth.getAccounts();
-            // currentAddr = accounts[0];
-
+            
             store.dispatch({
                 type: "GET_USER_INFO",
                 payload: { account: currentAddr }
             });
 
             addListeners(provider);
-
-
-            // window.ethereum.on('accountsChanged', function (accounts) {
-                
-            //     walletConnected = true;
-            //     currentAddr = accounts[0];
-
-            //     store.dispatch({
-            //         type: "GET_USER_INFO",
-            //         payload: { account: accounts[0] }
-            //     });
-            // })
-            
             walletConnected = true;
         }
     }
