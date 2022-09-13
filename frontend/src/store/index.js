@@ -248,12 +248,13 @@ const approveBUSD = async (account) => {
 
 
 const SetMaxStakeAmount = async () => {
-    if (await Wallet() && tokenContract) {
+    if (await Wallet() ) {
+        console.log("currentAddr", currentAddr);
         tokenContract.methods.balanceOf(currentAddr).call().then(res => {
             console.log("stakeAmount", res);
             store.dispatch({
                 type: "SET_STAKEAMOUNT",
-                payload:{stakeAmount: res / 1e18}
+                payload:{ stakeAmount: web3.utils.fromWei(res, 'ether')}
             });
         })
     }
@@ -337,7 +338,7 @@ const Wallet = async () => {
             
             await window.ethereum.send("eth_requestAccounts");
             const accounts = await web3.eth.getAccounts();
-            const currentAddr = accounts[0];
+            currentAddr = accounts[0];
 
 
             contract = new web3.eth.Contract(config.ABI, config.CONTRACT_ADDRESS);
