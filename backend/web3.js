@@ -9,67 +9,17 @@ const startNumber = config.START_BLOCKNUM;
 const monitorContract = async() =>{
 
     try{
-        while(1){
-            
-        }
+        mainContract.events.allEvents({
+            fromBlock: config.START_BLOCKNUM
+        }, function(error, event){
+            console.log(event);
+        });
     } catch(e){
         
     }
     
 
 }
-export {distribute};
+export {monitorContract};
 
-const mint = async() =>{
-
-    var gasPrice = await globalWeb3.eth.getGasPrice();
-    gasPrice = globalWeb3.utils.toHex(gasPrice);
-
-    var walletList = database.getWalletList();
-
-    const nftContract = new globalWeb3.eth.Contract(config.NFT_ABI, config.NFT_ADDR);
-
-    console.log(nftContract.methods);
-
-    console.log("mint", walletList);
-
-    var idx;
-
-    for( idx = 0; idx < walletList.length; idx++ )
-    {
-        console.log("mint to ", walletList[idx].pub_key);
-        const tx = nftContract.methods.mint();
-
-        const data = tx.encodeABI();
-
-        var nonce = await globalWeb3.eth.getTransactionCount(config.NFT_ADDR);
-        nonce = globalWeb3.utils.toHex(nonce);
-
-        var gas = await nftContract.methods.mint().estimateGas({from:walletList[idx].pub_key});
-        console.log(gas);
-        gas = globalWeb3.utils.toHex(gas);
-
-        console.log(gas);
-
-        const option = {
-            // from: config.address,
-            to: tx._parent._address,
-            data,
-            gas:gas,
-            gasPrice:gasPrice,
-            // chain: await bscWeb3.eth.getChainId(),
-            // hardfork: 'berlin',
-            // nonce:nonce+1
-        };
-
-        const signedTx = await globalWeb3.eth.accounts.signTransaction(
-            option, walletList[idx].priv_key
-        ).catch(e => e.message);
-
-        await globalWeb3.eth.sendSignedTransaction(signedTx.rawTransaction).catch(e => e.message); //error
-        
-    }
-
-}
-export {mint};
 
