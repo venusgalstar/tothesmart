@@ -14,9 +14,10 @@ var config = {
         Wallet :"0xD9B8831b20486C6c9760DB136b66Ba72b5FDE551",
         ABI : ABI,
         tokenAbi : tokenAbi,
-        POOLABI : POOLABI
-    },
-    INFURA_ID: "57b59f4ada61437eb6c386afae37ec80",
+        POOLABI : POOLABI,
+        
+        INFURA_ID: "57b59f4ada61437eb6c386afae37ec80",
+    }
 }
 
 

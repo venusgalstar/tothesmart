@@ -10,6 +10,9 @@ const providerOptions = {
     package: WalletConnectProvider, // required
     options: {
       infuraId: config.INFURA_ID, // required
+      rpc: {
+        97: config.mainNetUrl,
+      },
     },
   },
   coinbasewallet: {
@@ -22,9 +25,9 @@ const providerOptions = {
       darkMode: false, // Optional. Use dark theme, defaults to false
     },
   },
-  binancechainwallet: {
-    package: true,
-  },
+//   binancechainwallet: {
+//     package: true,
+//   },
 };
 
 const web3Modal = new Web3Modal({

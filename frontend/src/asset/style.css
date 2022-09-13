@@ -4339,14 +4339,14 @@ textarea.w-select {
 
 
 
-   @media screen and (max-width: 425px) {
+   @media screen and (max-width: 991px) {
     div.example {
       color: #ffffff;
-      font-size: 37px;
+      font-size: 13px;
     }
   }
 
-      @media screen and (max-width: 425px) {
+  @media screen and (max-width: 425px) {
     div.example {
       color: #41dff5;
       font-size: 11px;
