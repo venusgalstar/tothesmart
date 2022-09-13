@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 import { createStore } from 'redux';
+import Web3 from 'web3';
 import config from '../config/index';
-import { globalWeb3, gContract, gTokenContract, gPoolContract, web3, tokenContract, contract, poolContract } from '../config/web3';
+import { web3Modal, globalWeb3, gContract, gTokenContract, gPoolContract} from '../config/web3';
+
+let web3;
+let tokenContract;
+let contract;
+let poolContract;
 
 var walletConnected = false;
 var currentAddr;
@@ -296,6 +302,19 @@ const swichNetwork = async (chainId) => {
     return true;
 }
 
+
+async function addListeners(web3ModalProvider) {
+
+    web3ModalProvider.on("accountsChanged", (accounts) => {
+      window.location.reload()
+    });
+    
+    // Subscribe to chainId change
+    web3ModalProvider.on("chainChanged", (chainId) => {
+      window.location.reload()
+    });
+  }
+
 const Wallet = async () => {
 
     console.log("walletConnected", walletConnected);
@@ -310,30 +329,45 @@ const Wallet = async () => {
             }
         } 
 
+        const provider = await web3Modal.connect();
+
         // Check chain ID and swich if possible
         let networkEnabled = swichNetwork(config.NETWORK_ID);
         console.log(await networkEnabled);
 
         if (await networkEnabled) {
-            console.log(networkEnabled);
-            let accounts = await web3.eth.getAccounts();
-            currentAddr = accounts[0];
+
+            const web3 = new Web3(provider);
+            await window.ethereum.send("eth_requestAccounts");
+            const accounts = await web3.eth.getAccounts();
+            const currentAddr = accounts[0];
+
+            contract = new web3.eth.Contract(config.ABI, config.CONTRACT_ADDRESS);
+            tokenContract = new web3.eth.Contract(config.tokenAbi, config.tokenAddr);
+            poolContract = new web3.eth.Contract(config.POOLABI, config.POOL);
+                    
+            // console.log(networkEnabled);
+            // let accounts = await web3.eth.getAccounts();
+            // currentAddr = accounts[0];
 
             store.dispatch({
                 type: "GET_USER_INFO",
                 payload: { account: currentAddr }
             });
 
-            window.ethereum.on('accountsChanged', function (accounts) {
-                
-                walletConnected = true;
-                currentAddr = accounts[0];
+            addListeners(provider);
 
-                store.dispatch({
-                    type: "GET_USER_INFO",
-                    payload: { account: accounts[0] }
-                });
-            })
+
+            // window.ethereum.on('accountsChanged', function (accounts) {
+                
+            //     walletConnected = true;
+            //     currentAddr = accounts[0];
+
+            //     store.dispatch({
+            //         type: "GET_USER_INFO",
+            //         payload: { account: accounts[0] }
+            //     });
+            // })
             
             walletConnected = true;
         }
