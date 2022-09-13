@@ -10,7 +10,7 @@ const monitorContract = async() =>{
 
     try{
         while(1){
-            var 
+            
         }
     } catch(e){
         

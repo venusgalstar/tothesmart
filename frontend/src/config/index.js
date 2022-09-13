@@ -16,9 +16,7 @@ var config = {
         tokenAbi : tokenAbi,
         POOLABI : POOLABI
     },
-
-    test: {
-    }
+    INFURA_ID: "57b59f4ada61437eb6c386afae37ec80",
 }
 
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.5.2",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.2.5",
@@ -10,6 +11,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@walletconnect/web3-provider": "^1.8.0",
     "apexcharts": "^3.32.1",
     "axios": "^0.24.0",
     "chart.js": "2.9.3",
@@ -19,10 +21,10 @@
     "moment": "^2.29.1",
     "moment-business-days": "^1.2.0",
     "react": "^17.0.2",
+    "react-burger-menu": "^3.0.6",
     "react-chartjs-2": "2.9.0",
     "react-charts": "^2.0.0-beta.7",
     "react-custom-scrollbars": "^4.2.1",
-    "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.14.4",
@@ -33,7 +35,8 @@
     "react-toastify": "^8.1.0",
     "redux": "^4.1.2",
     "web-vitals": "^1.0.1",
-    "web3": "^1.6.1"
+    "web3": "^1.6.1",
+    "web3modal": "^1.9.9"
   },
   "scripts": {
     "start": "react-scripts start",
