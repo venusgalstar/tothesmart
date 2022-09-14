@@ -29,37 +29,36 @@ const initDB = () =>
 export{ initDB };
 
 
-const getWalletCount = (curTimestamp) =>
+const getWalletCount = (currentBlockNumber) =>
 {
-    var startTimestamp = curTimestamp - 24 * 3600 * 7;
-    var walletList = [];
+    var walletList = {};
 
     console.log("Trying to get account list from database... \n");
 
     try{
 
+        var startTimestamp = currentBlockNumber - 24 * 3600 * 7;
         var query = "SELECT count(id) as count FROM analystic_list group by wallet_address";
         var result = DB.query(query);
 
-        walletList["total_count"] = result.count;
+        walletList["total_count"] = result.length;
 
-        var query = "SELECT count(address) as count FROM wallet_list group by wallet_address WHERE timestamp >= ${startTimestamp} ";
-        var result = DB.query(query);
+        query = "SELECT count(wallet_address) as count FROM analystic_list WHERE timestamp >= " + startTimestamp + " group by wallet_address ";
+        result = DB.query(query);
 
-        walletList["new_count"] = result.count;
+        walletList["new_count"] = result.length;
 
-        console.log("Succeed in fetching erc20 token list from database.\n");
+        console.log("Succeed in fetching wallet count list from database.\n");
     } catch(e)
     {
         console.log("Failed in getting account list from database.\n", e);
     }
-    
     return walletList;    
 }
 
 export { getWalletCount };
 
-const insertTransaction = async(transactionList) =>
+const insertTransaction = async(currentBlockNumber) =>
 {
     var idx;
     var query;
@@ -83,3 +82,29 @@ const insertTransaction = async(transactionList) =>
 }
 
 export{ insertTransaction };
+
+const getTransactionInfo = async(transactionList) =>
+{
+    var idx;
+
+    try{
+        var startTimestamp = currentBlockNumber - 24 * 3600 * 7;
+        var query = "SELECT count(id) as count FROM analystic_list group by wallet_address";
+        var result = DB.query(query);
+
+        walletList["total_count"] = result.length;
+
+        query = "SELECT count(wallet_address) as count FROM analystic_list WHERE timestamp >= " + startTimestamp + " group by wallet_address ";
+        result = DB.query(query);
+
+        walletList["new_count"] = result.length;
+
+        console.log("Succeed in fetching wallet count list from database.\n");
+    } catch(e){
+        console.log("Error occurred in inserting erc20_list...\n", e);
+        return false;
+    }
+    return true;
+}
+
+export{ getTransactionInfo };

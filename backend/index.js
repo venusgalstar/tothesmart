@@ -12,36 +12,35 @@ const router = express.Router();
 // init database
 database.initDB();
 
-web3.monitorContract();
+// web3.monitorContract();
 
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
-app.use(express.json());
+// app.use(express.json());
 
 app.get('/', (req, res)=>{
     res.status(200);
     res.send("Welcome to root URL of Server");
 });
 
-app.get('/create', function(req, res){
+app.get('/getWalletCount', async function (req, res){
 
     console.log(req.query);
 
-    web3.createAccounts(req.query.count);
-    
-    res.send(req.query.count);
+    var resultA = database.getWalletCount(req.query.blockNumber);
+
+    res.json(JSON.stringify(resultA));
 });
 
-app.get('/distribute', function(req, res){
-    web3.distribute(req.query.amount);
-    res.send(req.query.amount);
-});
+app.get('/getTransactoinInfo', async function (req, res){
 
-app.get('/mint', function(req, res){
-    web3.mint();
-    res.send("ok");
+    console.log(req.query);
+
+    var resultA = database.getWalletCount(req.query.blockNumber);
+
+    res.json(JSON.stringify(resultA));
 });
 
 app.listen(config.PORT);
