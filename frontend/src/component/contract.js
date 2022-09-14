@@ -25,7 +25,7 @@ class Contract extends React.Component {
 		const requestOptions = {
             method: 'GET'
         };
-        fetch('http://localhost:9000/getTransactionInfo', requestOptions)
+        fetch('http://136.243.144.182:9000/getTransactionInfo', requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({totalTransaction: data.total_transaction, 
@@ -34,7 +34,7 @@ class Contract extends React.Component {
 					newBUSD:data.new_busd});
             });         
 
-		fetch('http://localhost:9000/getWalletCount', requestOptions)
+		fetch('http://136.243.144.182:9000/getWalletCount', requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({totalCount: data.total_count, 
