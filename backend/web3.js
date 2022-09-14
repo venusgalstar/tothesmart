@@ -5,8 +5,7 @@ import * as database from './database.js';
 const globalWeb3 = new Web3(new Web3.providers.HttpProvider(config.NET_RPC)); 
 const mainContract = new globalWeb3.eth.Contract(config.CONTRACT_ABI, config.CONTRACT_ADDR);
 const tokenContract = new globalWeb3.eth.Contract(config.TOKEN_ABI, config.TOKEN_ADDR);
-var startNumber = config.START_BLOCKNUM;
-var startNumber1 = config.START_BLOCKNUM;
+var startNumber = 0;
 
 var CurrentBlockNumber = await globalWeb3.eth.getBlockNumber();
 
@@ -15,6 +14,10 @@ export{CurrentBlockNumber};
 // console.log("info```````", info);
 
 const monitorContract = async() =>{
+
+    if( startNumber == 0 ){
+        startNumber = Math.round(database.getLastBlockNumber());
+    }
 
     try{
         var currentNumber = await globalWeb3.eth.getBlockNumber();
@@ -30,8 +33,13 @@ const monitorContract = async() =>{
 
             console.log("from: ", startNumber, currentNumber, typeof event);
             startNumber = currentNumber;
-            var count = Object.keys(event).length;
+            database.updateLastBlockNumber(currentNumber);
 
+            if( event == undefined || event == null ){
+                return;
+            }
+
+            var count = Object.keys(event).length;
 
             if( count == 0 ){
                 return;

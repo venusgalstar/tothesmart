@@ -10,7 +10,7 @@ import bodyParser from 'body-parser';
 const router = express.Router();
 
 // init database
-database.initDB();
+await database.initDB();
 
 web3.monitorContract();
 

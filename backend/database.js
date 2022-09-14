@@ -1,7 +1,7 @@
 import {config} from './config/config.js';
 import mysql from 'sync-mysql';
-import * as web3 from './web3.js';
 
+var startNumber = config.START_BLOCKNUM;
 var DB;
 
 const initDB = () =>
@@ -15,9 +15,10 @@ const initDB = () =>
             password: config.PASSWORD,
             database: config.DATABASE
         });
+
     } catch(e){
         console.log("Failed to connect database! Trying again every 1 second. \n", e);
-        setTimeout(getNetworkList, 1000);
+        setTimeout(initDB, 1000);
     }
     
     console.log("Succeed in establishing connection to database.\n");
@@ -25,6 +26,43 @@ const initDB = () =>
 
 export{ initDB };
 
+const getLastBlockNumber = () =>
+{
+    var blockNumber;
+
+    console.log("Trying to get blocknumber from database... \n");
+
+    try{
+        var query = "SELECT startBlock FROM config";
+        var result = DB.query(query);
+
+        blockNumber = result[0]["startBlock"];
+        startNumber = blockNumber;
+        
+        console.log(startNumber);
+    } catch(e)
+    {
+        console.log("Failed in getting blocknumber from database.\n", e);
+    }
+    return startNumber;    
+}
+
+export{ getLastBlockNumber };
+
+const updateLastBlockNumber = (blockNumber) =>
+{
+    console.log("Trying to update blocknumber from database... \n");
+
+    try{
+        var query = "UPDATE config SET startBlock = "+ blockNumber;
+        var result = DB.query(query);
+    } catch(e)
+    {
+        console.log("Failed in update blockNumber to database.\n", e);
+    } 
+}
+
+export{ updateLastBlockNumber };
 
 const getWalletCount = (currentBlockNumber) =>
 {
@@ -61,6 +99,8 @@ const insertTransaction = async(transactionList) =>
     var query;
     var result;
 
+    console.log("Trying to insert transaction list to database... \n");
+
     if( transactionList.length == 0 )
         return false;
 
@@ -72,7 +112,7 @@ const insertTransaction = async(transactionList) =>
             result = DB.query(query);
         }
     } catch(e){
-        console.log("Error occurred in inserting erc20_list...\n", e);
+        console.log("Error occurred in inserting transaction list...\n", e);
         return false;
     }
     return true;
@@ -95,8 +135,6 @@ const getTransactionInfo = (currentBlockNumber) =>
         result = DB.query(query);
 
         transactionInfo["new_transaction"] = result[0].count;
-
-        console.log("Succeed in fetching transaction list from database.\n");
 
         query = "SELECT sum(busd_amount) as sum FROM analystic_list ";
         result = DB.query(query);
