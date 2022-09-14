@@ -83,28 +83,41 @@ const insertTransaction = async(currentBlockNumber) =>
 
 export{ insertTransaction };
 
-const getTransactionInfo = async(transactionList) =>
+const getTransactionInfo = (currentBlockNumber) =>
 {
     var idx;
+    var transactionInfo = {};
 
     try{
         var startTimestamp = currentBlockNumber - 24 * 3600 * 7;
-        var query = "SELECT count(id) as count FROM analystic_list group by wallet_address";
+        var query = "SELECT count(id) as count FROM analystic_list group by transaction_hash";
         var result = DB.query(query);
 
-        walletList["total_count"] = result.length;
+        transactionInfo["total_transaction"] = result.length;
 
-        query = "SELECT count(wallet_address) as count FROM analystic_list WHERE timestamp >= " + startTimestamp + " group by wallet_address ";
+        query = "SELECT count(id) as count FROM analystic_list WHERE timestamp >= " + startTimestamp + " group by transaction_hash ";
         result = DB.query(query);
 
-        walletList["new_count"] = result.length;
+        transactionInfo["new_transaction"] = result.length;
 
-        console.log("Succeed in fetching wallet count list from database.\n");
+        console.log("Succeed in fetching transaction list from database.\n");
+
+        query = "SELECT sum(busd_amount) as sum FROM analystic_list ";
+        result = DB.query(query);
+
+        transactionInfo["total_busd"] = result[0].sum;
+
+        query = "SELECT sum(busd_amount) as sum FROM analystic_list WHERE timestamp >= " + startTimestamp;
+        result = DB.query(query);
+
+        transactionInfo["new_busd"] = result[0].sum;
+
+        console.log(transactionInfo);
     } catch(e){
         console.log("Error occurred in inserting erc20_list...\n", e);
-        return false;
+        return transactionInfo;
     }
-    return true;
+    return transactionInfo;
 }
 
 export{ getTransactionInfo };

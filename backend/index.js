@@ -34,11 +34,13 @@ app.get('/getWalletCount', async function (req, res){
     res.json(JSON.stringify(resultA));
 });
 
-app.get('/getTransactoinInfo', async function (req, res){
+app.get('/getTransactionInfo', async function (req, res){
 
     console.log(req.query);
 
-    var resultA = database.getWalletCount(req.query.blockNumber);
+    var resultA = database.getTransactionInfo(req.query.blockNumber);
+
+    console.log(resultA);
 
     res.json(JSON.stringify(resultA));
 });
