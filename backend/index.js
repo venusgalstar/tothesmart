@@ -31,7 +31,7 @@ app.get('/getWalletCount', async function (req, res){
 
     var resultA = database.getWalletCount(web3.CurrentBlockNumber);
 
-    res.json(JSON.stringify(resultA));
+    res.json(resultA);
 });
 
 app.get('/getTransactionInfo', async function (req, res){
@@ -40,7 +40,7 @@ app.get('/getTransactionInfo', async function (req, res){
 
     var resultA = database.getTransactionInfo(web3.CurrentBlockNumber);
 
-    res.json(JSON.stringify(resultA));
+    res.json(resultA);
 });
 
 app.listen(config.PORT);

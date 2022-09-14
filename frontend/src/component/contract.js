@@ -6,34 +6,45 @@ class Contract extends React.Component {
 	constructor(props){
         super(props);
         this.state = {
+			totalCount: "0",
+			newCount: "0",
 			totalTransaction: "0",
-			newTransaction: "0"
+			newTransaction: "0",
+			totalBUSD: "0",
+			newBUSD:"0"
         }
+
+		this.updateTime();
+		this.timer = setInterval(() => {
+            this.updateTime();
+        }, 60 * 1000);
     }
 
-	componentDidMount(){
-		updateContractInfo();
-	}
 
-	updateContractInfo = ()=>{
+	updateTime(){
 		const requestOptions = {
             method: 'GET'
         };
-        fetch('https://localhost:9000/getTransactionInfo', requestOptions)
+        fetch('http://localhost:9000/getTransactionInfo', requestOptions)
             .then(response => response.json())
             .then(data => {
-                this.setState({totalTransaction: data.totalTransaction});
-            });
-            
-        }
-		setTimeout(() => {
-			updateContractInfo
-		}, 60000);
+                this.setState({totalTransaction: data.total_transaction, 
+					newTransaction:data.new_transaction,
+					totalBUSD:data.total_busd,
+					newBUSD:data.new_busd});
+            });         
+
+		fetch('http://localhost:9000/getWalletCount', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({totalCount: data.total_count, 
+					newCount:data.new_count});
+            });  
 	}
 
 	render (){
 		return (<>
-		<div id="Contract" className="se2 wf-section">
+			<div id="Contract" className="se2 wf-section">
 				<div className="div3">
 					<div className="divcontentl _2">
 						<div className="div-block-4">
@@ -51,28 +62,28 @@ class Contract extends React.Component {
 							<div className="div-colum">
 								<div className="text-block-4">Members Total</div>
 								<div className="item-values">
-									<div className="text-block-6" id="us2">00</div>
+									<div className="text-block-6" id="us2">{this.state.totalCount}</div>
 								</div>
 								<div className="item-values-rela">
-									<div className="text-block-7"  id="us">00</div>
+									<div className="text-block-7"  id="us">+{this.state.newCount}</div>
 								</div>
 							</div>
 							<div className="div-colum">
 								<div className="text-block-4">Transactions made</div>
 								<div className="item-values">
-									<div className="text-block-6" id="de2">00</div>
+									<div className="text-block-6" id="de2">{this.state.totalTransaction}</div>
 								</div>
 								<div className="item-values-rela">
-									<div className="text-block-7" id="de">00</div>
+									<div className="text-block-7" id="de">+{this.state.newTransaction}</div>
 								</div>
 							</div>
 							<div className="div-colum">
 								<div className="text-block-4">Turnover, BUSD</div>
 								<div className="item-values">
-									<div className="text-block-6" id="vo2">0</div>
+									<div className="text-block-6" id="vo2">{this.state.totalBUSD}</div>
 								</div>
 								<div className="item-values-rela">
-									<div className="text-block-7"  id="vo">00</div>
+									<div className="text-block-7"  id="vo">+{this.state.newBUSD}</div>
 								</div>
 							</div>
 						</div>

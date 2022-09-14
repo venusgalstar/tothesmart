@@ -89,24 +89,24 @@ const getTransactionInfo = (currentBlockNumber) =>
         var query = "SELECT count(id) as count FROM analystic_list";
         var result = DB.query(query);
 
-        transactionInfo["total_transaction"] = result.length;
+        transactionInfo["total_transaction"] = result[0].count;
 
         query = "SELECT count(id) as count FROM analystic_list WHERE timestamp >= " + startTimestamp;
         result = DB.query(query);
 
-        transactionInfo["new_transaction"] = result.length;
+        transactionInfo["new_transaction"] = result[0].count;
 
         console.log("Succeed in fetching transaction list from database.\n");
 
         query = "SELECT sum(busd_amount) as sum FROM analystic_list ";
         result = DB.query(query);
 
-        transactionInfo["total_busd"] = result[0].sum;
+        transactionInfo["total_busd"] = Math.round(result[0].sum);
 
         query = "SELECT sum(busd_amount) as sum FROM analystic_list WHERE timestamp >= " + startTimestamp;
         result = DB.query(query);
 
-        transactionInfo["new_busd"] = result[0].sum;
+        transactionInfo["new_busd"] = Math.round(result[0].sum);
 
         console.log(transactionInfo);
     } catch(e){
