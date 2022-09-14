@@ -1,5 +1,6 @@
 import {config} from './config/config.js';
 import mysql from 'sync-mysql';
+import * as web3 from './web3.js';
 
 var DB;
 
@@ -54,7 +55,7 @@ const getWalletCount = (currentBlockNumber) =>
 
 export { getWalletCount };
 
-const insertTransaction = async(currentBlockNumber) =>
+const insertTransaction = async(transactionList) =>
 {
     var idx;
     var query;
@@ -81,7 +82,6 @@ export{ insertTransaction };
 
 const getTransactionInfo = (currentBlockNumber) =>
 {
-    var idx;
     var transactionInfo = {};
 
     try{

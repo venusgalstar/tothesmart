@@ -8,6 +8,9 @@ const tokenContract = new globalWeb3.eth.Contract(config.TOKEN_ABI, config.TOKEN
 var startNumber = config.START_BLOCKNUM;
 var startNumber1 = config.START_BLOCKNUM;
 
+var CurrentBlockNumber = await globalWeb3.eth.getBlockNumber();
+
+export{CurrentBlockNumber};
 // let info = await mainContract.methods.Delevoper.call().call();
 // console.log("info```````", info);
 
@@ -15,6 +18,7 @@ const monitorContract = async() =>{
 
     try{
         var currentNumber = await globalWeb3.eth.getBlockNumber();
+        CurrentBlockNumber = currentNumber;
 
         if( currentNumber >= startNumber + 2000 )
             currentNumber = startNumber + 2000;

@@ -27,18 +27,18 @@ app.get('/', (req, res)=>{
 
 app.get('/getWalletCount', async function (req, res){
 
-    console.log(req.query);
+    // console.log(req.query);
 
-    var resultA = database.getWalletCount(req.query.blockNumber);
+    var resultA = database.getWalletCount(web3.CurrentBlockNumber);
 
     res.json(JSON.stringify(resultA));
 });
 
 app.get('/getTransactionInfo', async function (req, res){
 
-    console.log(req.query);
+    // console.log(req.query);
 
-    var resultA = database.getTransactionInfo(req.query.blockNumber);
+    var resultA = database.getTransactionInfo(web3.CurrentBlockNumber);
 
     res.json(JSON.stringify(resultA));
 });

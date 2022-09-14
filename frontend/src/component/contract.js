@@ -6,8 +6,30 @@ class Contract extends React.Component {
 	constructor(props){
         super(props);
         this.state = {
+			totalTransaction: "0",
+			newTransaction: "0"
         }
     }
+
+	componentDidMount(){
+		updateContractInfo();
+	}
+
+	updateContractInfo = ()=>{
+		const requestOptions = {
+            method: 'GET'
+        };
+        fetch('https://localhost:9000/getTransactionInfo', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({totalTransaction: data.totalTransaction});
+            });
+            
+        }
+		setTimeout(() => {
+			updateContractInfo
+		}, 60000);
+	}
 
 	render (){
 		return (<>
@@ -97,7 +119,6 @@ class Contract extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        miner: state.miner,
     };
 }
 
