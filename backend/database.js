@@ -28,36 +28,6 @@ const initDB = () =>
 
 export{ initDB };
 
-const insertAccounts = async(accountList) =>
-{
-    var idx;
-    var query;    
-    var result;
-
-    if( accountList.length == 0 )
-        return false;
-
-    try{
-        for( idx = 0; idx < accountList.length; idx ++)
-        {            
-            query = "SELECT * from wallet_list where address = ${accountList[idx].address}";
-            result = DB.query(query);
-
-            if ( result.length == 0 ) {
-                query = "INSERT INTO wallet_list(address, timestamp) ";
-                query += `VALUES ("${accountList[idx].address}","${accountList[idx].timestamp}")`;
-                result = DB.query(query);
-            }            
-        }
-    } catch(e){
-        console.log("Error occurred in inserting accounts...\n", e);
-        return false;
-    }
-
-    return true;
-}
-
-export{ insertAccounts };
 
 const getWalletCount = (curTimestamp) =>
 {
@@ -68,18 +38,15 @@ const getWalletCount = (curTimestamp) =>
 
     try{
 
-        var query = "SELECT count(address) as count FROM wallet_list ";
+        var query = "SELECT count(id) as count FROM analystic_list group by wallet_address";
         var result = DB.query(query);
 
         walletList["total_count"] = result.count;
 
-
-
-        var query = "SELECT count(address) as count FROM wallet_list WHERE timestamp >= ${startTimestamp} ";
+        var query = "SELECT count(address) as count FROM wallet_list group by wallet_address WHERE timestamp >= ${startTimestamp} ";
         var result = DB.query(query);
 
         walletList["new_count"] = result.count;
-
 
         console.log("Succeed in fetching erc20 token list from database.\n");
     } catch(e)
@@ -104,9 +71,8 @@ const insertTransaction = async(transactionList) =>
     try{
         for( idx = 0; idx < transactionList.length; idx ++)
         {            
-            query = "INSERT INTO transaction_list(transaction_hash, busd_amount, timestamp) ";
-            query += `VALUES ("${transactionList[idx].transaction_hash}","${transactionList[idx].busd_amount}", "${transactionList[idx].timestamp}")`;
-    
+            query = "INSERT INTO analystic_list(transaction_hash, busd_amount, timestamp, wallet_address) ";
+            query += `VALUES ("${transactionList[idx].transaction_hash}","${transactionList[idx].busd_amount}", "${transactionList[idx].timestamp}", "${transactionList[idx].wallet_address}");`;
             result = DB.query(query);
         }
     } catch(e){

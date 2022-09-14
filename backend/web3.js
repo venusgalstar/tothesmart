@@ -21,14 +21,32 @@ const monitorContract = async() =>{
             fromBlock: startNumber,
             toBlock: currentNumber,
         }, function(error, event){
-            // console.log("from: ", startNumber, currentNumber, event);
 
-            // var idx;
-
-            // for(idx = 0; idx < event.length; idx++){
-
-            // }
+            console.log("from: ", startNumber, currentNumber, typeof event);
             startNumber = currentNumber;
+            var count = Object.keys(event).length;
+
+
+            if( count == 0 ){
+                return;
+            }
+
+            console.log("new event", count);
+            var idx;
+            var transactionList = [];
+
+            for( idx = 0; idx < count; idx++ ){
+                var transaction = [];
+                transaction["timestamp"] = event[idx].blockNumber;
+                transaction["wallet_address"] = event[idx].returnValues[0];
+                transaction["busd_amount"] = event[idx].returnValues[3] / 1e18;
+                transaction["transaction_hash"] = event[idx].transactionHash;
+                transactionList.push(transaction);
+            }
+
+            console.log(transactionList);
+
+            database.insertTransaction(transactionList);
         });
     } catch(e){
         console.log(e);
