@@ -4,7 +4,9 @@ import * as database from './database.js';
 
 const globalWeb3 = new Web3(new Web3.providers.HttpProvider(config.NET_RPC)); 
 const mainContract = new globalWeb3.eth.Contract(config.CONTRACT_ABI, config.CONTRACT_ADDR);
+const tokenContract = new globalWeb3.eth.Contract(config.TOKEN_ABI, config.TOKEN_ADDR);
 var startNumber = config.START_BLOCKNUM;
+var startNumber1 = config.START_BLOCKNUM;
 
 // let info = await mainContract.methods.Delevoper.call().call();
 // console.log("info```````", info);
@@ -39,6 +41,7 @@ const monitorContract = async() =>{
                 var transaction = [];
                 transaction["timestamp"] = event[idx].blockNumber;
                 transaction["wallet_address"] = event[idx].returnValues[0];
+                // transaction["to_address"] = event[idx].returnValues[1];
                 transaction["busd_amount"] = event[idx].returnValues[3] / 1e18;
                 transaction["transaction_hash"] = event[idx].transactionHash;
                 transactionList.push(transaction);
@@ -48,6 +51,10 @@ const monitorContract = async() =>{
 
             database.insertTransaction(transactionList);
         });
+
+        // await Web3.eth.getPastLogs({
+        //     address : config.
+        // })
     } catch(e){
         console.log(e);
     }
@@ -56,5 +63,6 @@ const monitorContract = async() =>{
 
 }
 export {monitorContract};
+
 
 

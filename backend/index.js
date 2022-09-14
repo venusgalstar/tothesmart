@@ -12,7 +12,7 @@ const router = express.Router();
 // init database
 database.initDB();
 
-// web3.monitorContract();
+web3.monitorContract();
 
 var app = express();
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,8 +39,6 @@ app.get('/getTransactionInfo', async function (req, res){
     console.log(req.query);
 
     var resultA = database.getTransactionInfo(req.query.blockNumber);
-
-    console.log(resultA);
 
     res.json(JSON.stringify(resultA));
 });

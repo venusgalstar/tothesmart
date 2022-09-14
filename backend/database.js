@@ -3,10 +3,6 @@ import mysql from 'sync-mysql';
 
 var DB;
 
-var networkList = [];
-var erc20TokenList = [];
-var dexRouterList = [];
-
 const initDB = () =>
 {
     console.log("Trying connect to database...\n");
@@ -90,12 +86,12 @@ const getTransactionInfo = (currentBlockNumber) =>
 
     try{
         var startTimestamp = currentBlockNumber - 24 * 3600 * 7;
-        var query = "SELECT count(id) as count FROM analystic_list group by transaction_hash";
+        var query = "SELECT count(id) as count FROM analystic_list";
         var result = DB.query(query);
 
         transactionInfo["total_transaction"] = result.length;
 
-        query = "SELECT count(id) as count FROM analystic_list WHERE timestamp >= " + startTimestamp + " group by transaction_hash ";
+        query = "SELECT count(id) as count FROM analystic_list WHERE timestamp >= " + startTimestamp;
         result = DB.query(query);
 
         transactionInfo["new_transaction"] = result.length;
