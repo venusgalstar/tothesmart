@@ -26,6 +26,8 @@ const initDB = () =>
     console.log("Succeed in establishing connection to database.\n");
 }
 
+export{ initDB };
+
 const insertAccounts = async(accountList) =>
 {
     var idx;

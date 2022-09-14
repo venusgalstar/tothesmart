@@ -12,11 +12,7 @@ const router = express.Router();
 // init database
 database.initDB();
 
-// web3.createAccounts(10);
-
-// web3.distribute(0.0001);
-
-// web3.mint();
+web3.monitorContract();
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
