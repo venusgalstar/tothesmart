@@ -1,5 +1,6 @@
 
-import abiContract from './NFTContract.json' assert {type: 'json'};
+import abiContract from './Contract.json' assert {type: 'json'};
+import abiTokenContract from './TokenContract.json' assert {type: 'json'};
 
 var config = {
     "HOST"      : "127.0.0.1",
@@ -12,7 +13,9 @@ var config = {
     "NET_RPC"   : "https://bsc-dataseed1.binance.org",
 
     "CONTRACT_ABI"   : abiContract,
-    "CONTRACT_ADDR"  : "0x25696251e8409992824A9B7Bad6d92790867e909",
+    "CONTRACT_ADDR"  : "0x9f0434a404A936bFA064dB3E34AaB2Ca1fBFcfA6",
+    "TOKEN_ABI" : abiTokenContract,
+    "TOKEN_ADDR": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
     "START_BLOCKNUM" : 20957483
 }
 

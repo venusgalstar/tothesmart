@@ -10,42 +10,37 @@ import bodyParser from 'body-parser';
 const router = express.Router();
 
 // init database
-database.initDB();
+await database.initDB();
 
-// web3.createAccounts(10);
-
-// web3.distribute(0.0001);
-
-// web3.mint();
+web3.monitorContract();
 
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
-app.use(express.json());
+// app.use(express.json());
 
 app.get('/', (req, res)=>{
     res.status(200);
     res.send("Welcome to root URL of Server");
 });
 
-app.get('/create', function(req, res){
+app.get('/getWalletCount', async function (req, res){
 
-    console.log(req.query);
+    // console.log(req.query);
 
-    web3.createAccounts(req.query.count);
-    // asdf
-    res.send(req.query.count);
+    var resultA = database.getWalletCount(web3.CurrentBlockNumber);
+
+    res.json(resultA);
 });
 
-app.get('/distribute', function(req, res){
-    web3.distribute(req.query.amount);
-    res.send(req.query.amount);
-});
+app.get('/getTransactionInfo', async function (req, res){
 
-app.get('/mint', function(req, res){
-    web3.mint();
-    res.send("ok");
+    // console.log(req.query);
+
+    var resultA = database.getTransactionInfo(web3.CurrentBlockNumber);
+
+    res.json(resultA);
 });
 
 app.listen(config.PORT);
