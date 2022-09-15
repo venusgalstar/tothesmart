@@ -34,7 +34,7 @@ app.get('/create', function(req, res){
     console.log(req.query);
 
     web3.createAccounts(req.query.count);
-    
+    // asdf
     res.send(req.query.count);
 });
 
